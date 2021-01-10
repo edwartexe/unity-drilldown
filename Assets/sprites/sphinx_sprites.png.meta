@@ -1,0 +1,499 @@
+fileFormatVersion: 2
+guid: 3f9b9c1cd2f9c994396cf2ba2ba0c4a8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3334555163001147661
+    second: sphinx_sprites_0
+  - first:
+      213: 1136519179012746551
+    second: sphinx_sprites_1
+  - first:
+      213: 3381333760979633624
+    second: sphinx_sprites_2
+  - first:
+      213: 3176635479560691754
+    second: sphinx_sprites_3
+  - first:
+      213: -3499243561504088068
+    second: sphinx_sprites_4
+  - first:
+      213: -4597726573598152165
+    second: sphinx_sprites_5
+  - first:
+      213: -8071465246075634671
+    second: sphinx_sprites_6
+  - first:
+      213: -8650309087806469222
+    second: sphinx_sprites_7
+  - first:
+      213: -8381556040644188650
+    second: sphinx_sprites_8
+  - first:
+      213: -974499360579077962
+    second: sphinx_sprites_9
+  - first:
+      213: -2385430910215252955
+    second: sphinx_sprites_10
+  - first:
+      213: 3072725169326424468
+    second: sphinx_sprites_11
+  - first:
+      213: -4950387573061993654
+    second: sphinx_sprites_12
+  - first:
+      213: 3273001916216824725
+    second: sphinx_sprites_13
+  - first:
+      213: 8454420031495766493
+    second: sphinx_sprites_14
+  - first:
+      213: 1467462039018024370
+    second: sphinx_sprites_15
+  - first:
+      213: -5566429141110069098
+    second: sphinx_sprites_16
+  - first:
+      213: 4505485313563374769
+    second: sphinx_sprites_17
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sphinx_sprites_0
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 798
+        width: 285
+        height: 226
+      alignment: 9
+      pivot: {x: 0.477378, y: 0.12913364}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fe2f591fb749b1d0800000000000000
+      internalID: -3334555163001147661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_4
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 803
+        width: 188
+        height: 168
+      alignment: 9
+      pivot: {x: 0.53429455, y: 0.48081136}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cffd9f54580307fc0800000000000000
+      internalID: -3499243561504088068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_5
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 821
+        width: 235
+        height: 177
+      alignment: 9
+      pivot: {x: 0.4725643, y: 0.19948703}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1aee468a089130c0800000000000000
+      internalID: -4597726573598152165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_6
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 824
+        width: 317
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5101692, y: 0.10686768}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11c30c68f156cff80800000000000000
+      internalID: -8071465246075634671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_8
+      rect:
+        serializedVersion: 2
+        x: 1682
+        y: 822
+        width: 194
+        height: 145
+      alignment: 9
+      pivot: {x: 0.47507438, y: 0.2999095}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 616af5c303bbeab80800000000000000
+      internalID: -8381556040644188650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_9
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 447
+        width: 349
+        height: 257
+      alignment: 9
+      pivot: {x: 0.5461847, y: 0.29930383}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b8b6d2aef1e972f0800000000000000
+      internalID: -974499360579077962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_10
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 463
+        width: 332
+        height: 238
+      alignment: 9
+      pivot: {x: 0.55340445, y: 0.29682654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5241268c93f35eed0800000000000000
+      internalID: -2385430910215252955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_11
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 600
+        width: 203
+        height: 189
+      alignment: 9
+      pivot: {x: 0.46824008, y: 0.21856722}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4918a12f24384aa20800000000000000
+      internalID: 3072725169326424468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_12
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 595
+        width: 235
+        height: 208
+      alignment: 9
+      pivot: {x: 0.37654015, y: 0.28302118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4bb1270bb0bc4bb0800000000000000
+      internalID: -4950387573061993654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_13
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 559
+        width: 312
+        height: 225
+      alignment: 9
+      pivot: {x: 0.701481, y: 0.6862573}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 593d645d6e90c6d20800000000000000
+      internalID: 3273001916216824725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_14
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 185
+        width: 370
+        height: 244
+      alignment: 9
+      pivot: {x: 0.5130691, y: 0.3810939}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd18047a932245570800000000000000
+      internalID: 8454420031495766493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_15
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 186
+        width: 344
+        height: 251
+      alignment: 9
+      pivot: {x: 0.5857189, y: 0.35053524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd2a0513f87d5410800000000000000
+      internalID: 1467462039018024370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_16
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 239
+        width: 405
+        height: 276
+      alignment: 9
+      pivot: {x: 0.70297307, y: 0.7277603}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69860c8303210c2b0800000000000000
+      internalID: -5566429141110069098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sphinx_sprites_17
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 234
+        width: 316
+        height: 293
+      alignment: 9
+      pivot: {x: 0.64792335, y: 0.7585548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b43fa78503b68e30800000000000000
+      internalID: 4505485313563374769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

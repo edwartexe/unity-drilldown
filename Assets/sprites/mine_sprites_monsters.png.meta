@@ -1,0 +1,646 @@
+fileFormatVersion: 2
+guid: ba2bc407d99de1a478ed97f681b6327f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: mine_sprites_monsters_0
+  - first:
+      213: 21300002
+    second: mine_sprites_monsters_1
+  - first:
+      213: 21300004
+    second: mine_sprites_monsters_2
+  - first:
+      213: 21300006
+    second: mine_sprites_monsters_3
+  - first:
+      213: 21300008
+    second: mine_sprites_monsters_4
+  - first:
+      213: 21300010
+    second: mine_sprites_monsters_5
+  - first:
+      213: 21300012
+    second: mine_sprites_monsters_6
+  - first:
+      213: 21300014
+    second: mine_sprites_monsters_7
+  - first:
+      213: 21300016
+    second: mine_sprites_monsters_8
+  - first:
+      213: 21300018
+    second: mine_sprites_monsters_9
+  - first:
+      213: 21300020
+    second: mine_sprites_monsters_10
+  - first:
+      213: 21300022
+    second: mine_sprites_monsters_11
+  - first:
+      213: 21300024
+    second: mine_sprites_monsters_12
+  - first:
+      213: 21300026
+    second: mine_sprites_monsters_13
+  - first:
+      213: 21300028
+    second: mine_sprites_monsters_14
+  - first:
+      213: 21300030
+    second: mine_sprites_monsters_15
+  - first:
+      213: 21300032
+    second: mine_sprites_monsters_16
+  - first:
+      213: 21300034
+    second: mine_sprites_monsters_17
+  - first:
+      213: 21300036
+    second: mine_sprites_monsters_18
+  - first:
+      213: 21300038
+    second: mine_sprites_monsters_19
+  - first:
+      213: 21300040
+    second: mine_sprites_monsters_20
+  - first:
+      213: 21300042
+    second: mine_sprites_monsters_21
+  - first:
+      213: 21300044
+    second: mine_sprites_monsters_22
+  - first:
+      213: 21300046
+    second: mine_sprites_monsters_23
+  - first:
+      213: 21300048
+    second: mine_sprites_monsters_24
+  - first:
+      213: 21300050
+    second: mine_sprites_monsters_25
+  - first:
+      213: 21300052
+    second: mine_sprites_monsters_26
+  - first:
+      213: 21300054
+    second: mine_sprites_monsters_27
+  - first:
+      213: 21300056
+    second: mine_sprites_monsters_28
+  - first:
+      213: 21300058
+    second: mine_sprites_monsters_29
+  - first:
+      213: 21300060
+    second: mine_sprites_monsters_30
+  - first:
+      213: 21300062
+    second: mine_sprites_monsters_31
+  - first:
+      213: 21300064
+    second: mine_sprites_monsters_32
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mine_sprites_monsters_0
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 2023
+        width: 221
+        height: 205
+      alignment: 9
+      pivot: {x: 0.44704357, y: 0.36298472}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0334379dd941afa4fabe993c04ed6ee3
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_4
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 1777
+        width: 221
+        height: 205
+      alignment: 9
+      pivot: {x: 0.44704357, y: 0.3629853}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da926232d0149a04d89cc4c8a16934e6
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1566
+        width: 327
+        height: 339
+      alignment: 9
+      pivot: {x: 0.44401082, y: 0.1219504}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd4455cf806601d4193a5940e0be3ebb
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_6
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 1546
+        width: 221
+        height: 205
+      alignment: 9
+      pivot: {x: 0.4576347, y: 0.37440276}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7966e3934ddc314cb9c41bb1065379c
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_7
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 1138
+        width: 327
+        height: 339
+      alignment: 9
+      pivot: {x: 0.4253478, y: 0.05594169}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a81d7d7c585bb4597ad68f2d438328
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_8
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 1318
+        width: 221
+        height: 205
+      alignment: 9
+      pivot: {x: 0.4894086, y: 0.35156667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 400cbc6e9da739149a711f265ee07bf3
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_9
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 1103
+        width: 221
+        height: 205
+      alignment: 9
+      pivot: {x: 0.52118254, y: 0.36298472}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ababd344dc8974438b893971792814a
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_10
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 745
+        width: 131
+        height: 171
+      alignment: 9
+      pivot: {x: 0.32341924, y: 0.87200534}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e22fbaf22575624d98a0829675163f9
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_11
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 733
+        width: 129
+        height: 181
+      alignment: 9
+      pivot: {x: 0.20860681, y: 0.84346604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17849b8c6c61a73409b6395fddfd81de
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_12
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 767
+        width: 138
+        height: 158
+      alignment: 9
+      pivot: {x: 0.19618158, y: 0.85686326}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3583504c3f5ff7d488d01f5ed6d9a9b3
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_13
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 666
+        width: 471
+        height: 269
+      alignment: 9
+      pivot: {x: 0.26561177, y: 0.5641248}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffd239fdbf119b14b9ef4ea074e7442e
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_15
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 509
+        width: 129
+        height: 137
+      alignment: 9
+      pivot: {x: 0.73535544, y: 0.879906}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec244c4ff63aeef40b96dc3fb7428c47
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_16
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 519
+        width: 128
+        height: 122
+      alignment: 9
+      pivot: {x: 0.43223, y: 0.8910642}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3d3c65c94708f443b282336887f3bd0
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_17
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 303
+        width: 486
+        height: 249
+      alignment: 9
+      pivot: {x: 0.25864866, y: 0.6108407}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5586b1497905056469d3e38d53a029ff
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_31
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1981
+        width: 327
+        height: 339
+      alignment: 9
+      pivot: {x: 0.38802186, y: 0.1219504}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b2c3ab41d3372d4d9c544dfdf5c31f9
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_32
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 538
+        width: 212
+        height: 161
+      alignment: 9
+      pivot: {x: 0.26809463, y: 0.75006217}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 079315c20efc3cc47af79ac02d239dd1
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_18
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 314
+        width: 432
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b0647330f4b5b549884c340c806c1cb
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_19
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 182
+        width: 460
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07454768fed49b14dac85c17aa6ba699
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_20
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 95
+        width: 454
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 220270c52e61ea447b55511dabe72dc1
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mine_sprites_monsters_21
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 12
+        width: 451
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d901e0c6e64123447a5336433ebaf7a6
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 3c367de996ae386408825c3ac130e0f6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

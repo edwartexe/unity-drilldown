@@ -1,0 +1,469 @@
+fileFormatVersion: 2
+guid: 388cfe5ab51e1b54496d4c69617957d4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 738154006995425468
+    second: strong-gremlin-part2_0
+  - first:
+      213: -864501377835746713
+    second: strong-gremlin-part2_1
+  - first:
+      213: 7186880801430471767
+    second: strong-gremlin-part2_2
+  - first:
+      213: 5016372218066170410
+    second: strong-gremlin-part2_3
+  - first:
+      213: -5529361481427422118
+    second: strong-gremlin-part2_4
+  - first:
+      213: -973471830887268301
+    second: strong-gremlin-part2_5
+  - first:
+      213: -9120250039746550395
+    second: strong-gremlin-part2_6
+  - first:
+      213: -635943082792620207
+    second: strong-gremlin-part2_7
+  - first:
+      213: -1116656459752814845
+    second: strong-gremlin-part2_8
+  - first:
+      213: 6325868260130181963
+    second: strong-gremlin-part2_9
+  - first:
+      213: 5932627415071602040
+    second: strong-gremlin-part2_10
+  - first:
+      213: 6465996212671215294
+    second: strong-gremlin-part2_11
+  - first:
+      213: -3636226798602806250
+    second: strong-gremlin-part2_12
+  - first:
+      213: 6173989744537315369
+    second: strong-gremlin-part2_13
+  - first:
+      213: 7965470983512715478
+    second: strong-gremlin-part2_14
+  - first:
+      213: 5398211268030870339
+    second: strong-gremlin-part2_15
+  - first:
+      213: 4377944392379368663
+    second: strong-gremlin-part2_16
+  - first:
+      213: 6246941453783114275
+    second: strong-gremlin-part2_17
+  - first:
+      213: -3477372072514078252
+    second: strong-gremlin-part2_18
+  - first:
+      213: 6363818225858309566
+    second: strong-gremlin-part2_19
+  - first:
+      213: -1451133606924459957
+    second: strong-gremlin-part2_20
+  - first:
+      213: 1468867682850356171
+    second: strong-gremlin-part2_21
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: strong-gremlin-part2_0
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 652
+        width: 457
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb85e7098237e3a00800000000000000
+      internalID: 738154006995425468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_1
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 129
+        width: 331
+        height: 338
+      alignment: 9
+      pivot: {x: 0.45577303, y: 0.4177089}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ab342c39ca004f0800000000000000
+      internalID: -864501377835746713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_2
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 589
+        width: 81
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 754865cd20eecb360800000000000000
+      internalID: 7186880801430471767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_3
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 763
+        width: 102
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a22f8f654fbbd9540800000000000000
+      internalID: 5016372218066170410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_4
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 652
+        width: 80
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a547ac84703c343b0800000000000000
+      internalID: -5529361481427422118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_5
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 634
+        width: 89
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3308d1907888d72f0800000000000000
+      internalID: -973471830887268301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_6
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 523
+        width: 85
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5852a26f8ec5e6180800000000000000
+      internalID: -9120250039746550395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_7
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 290
+        width: 79
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15f67c4b22dac27f0800000000000000
+      internalID: -635943082792620207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_8
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 414
+        width: 107
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 307c94cbdd6d080f0800000000000000
+      internalID: -1116656459752814845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_9
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 410
+        width: 108
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b435afcaaaff9c750800000000000000
+      internalID: 6325868260130181963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_10
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 280
+        width: 82
+        height: 123
+      alignment: 9
+      pivot: {x: 0.46429592, y: 0.47619653}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 875361c933de45250800000000000000
+      internalID: 5932627415071602040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strong-gremlin-part2_11
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 54
+        width: 126
+        height: 245
+      alignment: 9
+      pivot: {x: 0.38381764, y: 0.43427303}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb6f94f0c45dbb950800000000000000
+      internalID: 6465996212671215294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

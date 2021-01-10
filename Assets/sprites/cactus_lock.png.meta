@@ -1,0 +1,376 @@
+fileFormatVersion: 2
+guid: 9d209696b13bfbd419e062074728ba41
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5581627203034127968
+    second: cactus_lock_0
+  - first:
+      213: -7785963527385177156
+    second: cactus_lock_1
+  - first:
+      213: -3291042730166257073
+    second: cactus_lock_2
+  - first:
+      213: 7849255364979536583
+    second: cactus_lock_3
+  - first:
+      213: -7941463216124596155
+    second: cactus_lock_4
+  - first:
+      213: 2704261104272271422
+    second: cactus_lock_5
+  - first:
+      213: -5434884408595691412
+    second: cactus_lock_6
+  - first:
+      213: 5437419482349207373
+    second: cactus_lock_7
+  - first:
+      213: 2182255995345067861
+    second: cactus_lock_8
+  - first:
+      213: -9221479446698429322
+    second: cactus_lock_9
+  - first:
+      213: 4731746469016647687
+    second: cactus_lock_10
+  - first:
+      213: -7074042035030510373
+    second: cactus_lock_11
+  - first:
+      213: -1280540569501560483
+    second: cactus_lock_12
+  - first:
+      213: 5466432178812535967
+    second: cactus_lock_13
+  - first:
+      213: 1429215621477359483
+    second: cactus_lock_14
+  - first:
+      213: 5841220610747069324
+    second: cactus_lock_15
+  - first:
+      213: 5592112681977133284
+    second: cactus_lock_16
+  - first:
+      213: -3783261574964287018
+    second: cactus_lock_17
+  - first:
+      213: 6863264331443251881
+    second: cactus_lock_18
+  - first:
+      213: 4482807955039605415
+    second: cactus_lock_19
+  - first:
+      213: -5439610376008592575
+    second: cactus_lock_20
+  - first:
+      213: -9116157772168491182
+    second: cactus_lock_3
+  - first:
+      213: 3928115445189888941
+    second: cactus_lock_4
+  - first:
+      213: 4537506537209472380
+    second: cactus_lock_5
+  - first:
+      213: 4410591269542721617
+    second: cactus_lock_6
+  - first:
+      213: -9196479332204706030
+    second: cactus_lock_7
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cactus_lock_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 530
+        width: 208
+        height: 166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a16e7ea1a31a82b0800000000000000
+      internalID: -5581627203034127968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_1
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 550
+        width: 158
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb32f047c63b2f390800000000000000
+      internalID: -7785963527385177156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_2
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 519
+        width: 227
+        height: 178
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4afec7d21ed352d0800000000000000
+      internalID: -3291042730166257073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_3
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 306
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25f0b714ec6ec7180800000000000000
+      internalID: -9116157772168491182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_4
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 315
+        width: 137
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dabc4437f28738630800000000000000
+      internalID: 3928115445189888941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_5
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 297
+        width: 181
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c752264a72678fe30800000000000000
+      internalID: 4537506537209472380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cactus_lock_6
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 118
+        width: 199
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 158788e2461953d30800000000000000
+      internalID: 4410591269542721617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
