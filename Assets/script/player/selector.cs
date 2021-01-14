@@ -110,7 +110,7 @@ public class selector : MonoBehaviour {
 
 
         //Get input from the input manager, round it to an integer and store it
-        if (!movementLocked) {
+        
             if (Input.GetAxisRaw("Horizontal") != 0) {
                 if (h_isAxisInUse == false || Time.time >= timestamp) {
                     horizontal = (int)(Input.GetAxisRaw("Horizontal"));
@@ -535,6 +535,29 @@ public class selector : MonoBehaviour {
 
                 case 10:
                     //scanplace
+                    movementLocked = true;
+                    if ((selectedUnit != null) && (selectedUnit.selected) && (horizontal != 0 || vertical != 0)) {
+                        if (horizontal == -1 && vertical == 0) {
+                            selectedUnit.scanDirection = 0;
+                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+
+                    }
+                    if (horizontal == 0 && vertical == -1) {
+                            selectedUnit.scanDirection = 1;
+                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+
+                    }
+                    if (horizontal == 1 && vertical == 0) {
+                            selectedUnit.scanDirection = 2;
+                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                    if (horizontal == 0 && vertical == 1) {
+                            selectedUnit.scanDirection = 3;
+                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                }
+
+
                     if (Input.GetKeyDown("z")) {
                         if ((selectedUnit != null) && (selectedUnit.selected)) {
                             int enemyScan = 0; 
@@ -551,7 +574,8 @@ public class selector : MonoBehaviour {
                             ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
                             selectedUnit.updatePosition();
 
-                            foreach (Node nnn in selectedUnit.getScanTargets()) {
+                            selectedUnit.savedScanTargets=selectedUnit.getScanTargets2();
+                            foreach (Node nnn in selectedUnit.savedScanTargets) {
                                 if (nnn.isThereAnEnemyHere()) {
                                     if (nnn.enemyInThisNode.GetComponent<enemy_parent>().enemyClass.Equals(globals.nestName)) {
                                         nestScan++;
@@ -571,6 +595,7 @@ public class selector : MonoBehaviour {
                             
                             state_selector = 11;
                             //movementLocked = true;
+                            movementLocked = false;
                             menuScanResult.gameObject.SetActive(true);
                             menuScanResult.setValues(selectedUnit,enemyScan,enemyStrongScan,nestScan,relicScan);
                             //Debug.Log("Enemy: " + enemyScan + "Big-Enemy: " + enemyStrongScan + " Nest: " + nestScan + " Relic: " + relicScan);
@@ -604,7 +629,7 @@ public class selector : MonoBehaviour {
                         break;
             }
 
-        }
+
 
 
 
@@ -647,45 +672,46 @@ public class selector : MonoBehaviour {
 
 #endif //End of mobile platform dependendent compilation section started above with #elif
         //Check if we have a non-zero value for horizontal or vertical
-        if (horizontal != 0 || vertical != 0) {
-            //Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
-            //Pass in horizontal and vertical as parameters to specify the direction to move Player in.
-            //AttemptMove<Wall>(horizontal, vertical);
-            G_horizontal = horizontal;
-            G_vertical = vertical;
-            //Debug.Log("horizontal: " + horizontal + " vertical: " + vertical);
+        if (!movementLocked) {
+            if (horizontal != 0 || vertical != 0) {
+                //Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
+                //Pass in horizontal and vertical as parameters to specify the direction to move Player in.
+                //AttemptMove<Wall>(horizontal, vertical);
+                G_horizontal = horizontal;
+                G_vertical = vertical;
+                //Debug.Log("horizontal: " + horizontal + " vertical: " + vertical);
+            }
+
+
+
+
+
+            if (G_horizontal == -1 && G_vertical == 0 && nextDirection(0)) {
+                //changeIcon();
+                cursorNode = cursorNode.leftNode;
+                transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                //camScript.alignCamera(cursorNode, false);
+
+            }
+            if (G_horizontal == 0 && G_vertical == -1 && nextDirection(1)) {
+                //changeIcon();
+                cursorNode = cursorNode.downNode;
+                transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                //camScript.alignCamera(cursorNode, false);
+            }
+            if (G_horizontal == 1 && G_vertical == 0 && nextDirection(2)) {
+                //changeIcon();
+                cursorNode = cursorNode.rightNode;
+                transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                //camScript.alignCamera(cursorNode, false);
+            }
+            if (G_horizontal == 0 && G_vertical == 1 && nextDirection(3)) {
+                //changeIcon();
+                cursorNode = cursorNode.upNode;
+                transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                //camScript.alignCamera(cursorNode, false);
+            }
         }
-
-
-
-
-
-        if (G_horizontal == -1 && G_vertical == 0 && nextDirection(0)) {
-            //changeIcon();
-            cursorNode = cursorNode.leftNode;
-            transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-            //camScript.alignCamera(cursorNode, false);
-
-        }
-        if (G_horizontal == 0 && G_vertical == -1 && nextDirection(1)) {
-            //changeIcon();
-            cursorNode = cursorNode.downNode;
-            transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-            //camScript.alignCamera(cursorNode, false);
-        }
-        if (G_horizontal == 1 && G_vertical == 0 && nextDirection(2)) {
-            //changeIcon();
-            cursorNode = cursorNode.rightNode;
-            transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-            //camScript.alignCamera(cursorNode, false);
-        }
-        if (G_horizontal == 0 && G_vertical == 1 && nextDirection(3)) {
-            //changeIcon();
-            cursorNode = cursorNode.upNode;
-            transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-            //camScript.alignCamera(cursorNode, false);
-        }
-
         G_horizontal = 0;
         G_vertical = 0; 
 

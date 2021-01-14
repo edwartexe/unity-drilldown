@@ -59,6 +59,9 @@ public class battleMenu : MonoBehaviour {
 
         if (gridMaster.selector.selectedUnit != null) {
             unit_parent currentUnit = gridMaster.selector.selectedUnit;
+
+            currentUnit.savedScanTargets = currentUnit.getScanTargets2();
+
             if (currentUnit.isActive) {
                 if (currentUnit.checkAttackTargets(currentUnit.thisNode, false)) { allOptions.Add(new battleOption(0, "Attack", globals.action_cost_attack)); }
                 if (currentUnit.checkDrillTargets(currentUnit.thisNode, false)) { allOptions.Add(new battleOption(1, "Drill", globals.action_cost_drill)); }

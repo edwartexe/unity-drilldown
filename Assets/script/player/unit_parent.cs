@@ -31,6 +31,8 @@ public class unit_parent : MonoBehaviour{
 
     public int aggro = 0;//testing this value for enemy ai
     public int scanRange;
+    public int scanDirection=0;
+    public List<Node> savedScanTargets;
 
 
     // Start is called before the first frame update
@@ -351,6 +353,7 @@ public class unit_parent : MonoBehaviour{
         }
         if (nextNode.leftNode != null) { vecinos.Add(nextNode.leftNode); }
 
+        Debug.Log("bomb check");
 
         foreach (Node nn in vecinos) {
             if (compareNode) {
@@ -383,8 +386,7 @@ public class unit_parent : MonoBehaviour{
         return vecinos;
     }
 
-    public virtual List<Node> getScanTargets() {
-        bool bbb = false;
+    /*public virtual List<Node> getScanTargets() {
         int centerX = (int) this.nextNode.gridPoint.x;
         int centerY = (int) this.nextNode.gridPoint.y;
         int startX  = Mathf.Clamp(centerX - globals.scout_scan_range, 0, gridMaster.gridSizeX - 1);
@@ -402,15 +404,89 @@ public class unit_parent : MonoBehaviour{
         }
 
         return scanTargets;
+    }*/
+
+    public virtual List<Node> getScanTargets2() {
+        int startX = (int)this.nextNode.gridPoint.x;
+        int startY = (int)this.nextNode.gridPoint.y;
+        int maxDepth, baseValue, baseDepth, depthDirection;
+        bool isHorizontal=true;
+        switch (scanDirection) {
+            case 0: //left
+                maxDepth = Mathf.Clamp(startX - globals.scout_scan_range, 0, gridMaster.gridSizeX -1);
+                baseDepth = startX;
+                baseValue = startY;
+                isHorizontal = false;
+                depthDirection = -1;
+                break;
+            case 1: //down
+                maxDepth = Mathf.Clamp(startY - globals.scout_scan_range, 0, gridMaster.gridSizeZ -1);
+                baseDepth = startY;
+                baseValue = startX;
+                depthDirection = -1;
+                break;
+            case 2: //right
+                maxDepth = Mathf.Clamp(startX + globals.scout_scan_range, 0, gridMaster.gridSizeX -1 );
+                baseDepth = startX;
+                baseValue = startY;
+                isHorizontal = false;
+                depthDirection = 1;
+                break;
+            case 3: //up
+                maxDepth = Mathf.Clamp(startY + globals.scout_scan_range, 0, gridMaster.gridSizeZ-1 );
+                baseDepth = startY;
+                baseValue = startX;
+                depthDirection = 1;
+                break;
+            default: //nothing
+                maxDepth = startY;
+                baseDepth = startY;
+                baseValue = startX;
+                depthDirection = 1;
+                break;
+        }
+
+        Debug.Log("maxDepth "+maxDepth);
+        Debug.Log("baseDepth " + baseDepth);
+        List<Node> scanTargets = new List<Node>();
+        int depth = 0;
+        bool keepGoing= true;
+        while (keepGoing) {
+            Debug.Log("depth " + depth);
+            Debug.Log("real depth " + (baseDepth + depth * depthDirection));
+            int startWidth = Mathf.Clamp(baseValue - depth, 0, gridMaster.gridSizeX - 1);
+            int endWidth = Mathf.Clamp(baseValue + depth, 0, gridMaster.gridSizeZ - 1);
+            for (int j = startWidth; j <= endWidth; j++) {
+                if (isHorizontal) {
+                    if (gridMaster.grid[j, baseDepth + (depth * depthDirection)] != null) {
+                        scanTargets.Add(gridMaster.grid[j, baseDepth + (depth * depthDirection)]);
+                    }
+                } else {
+                    if (gridMaster.grid[baseDepth + (depth * depthDirection), j] != null) {
+                        scanTargets.Add(gridMaster.grid[baseDepth + (depth * depthDirection), j]);
+                    }
+                }
+            }
+
+            if (baseDepth + (depth * depthDirection) == maxDepth) {
+                keepGoing = false;
+            }
+
+            depth++;
+        }
+
+        return scanTargets;
     }
 
     public virtual bool checkScanTargets(Node searcher, bool compareNode) {
         if (compareNode) {
-            return getScanTargets().Contains(searcher); 
+            //return getScanTargets2().Contains(searcher); 
+            return savedScanTargets.Contains(searcher); 
         } else {
-            return getScanTargets().Count > 0;
+            //return getScanTargets2().Count > 0;
+            return savedScanTargets.Count > 0;
         }
-        
+
 
     }
     //=======================================================================================
