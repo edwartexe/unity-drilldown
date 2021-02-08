@@ -22,10 +22,10 @@ public class confirmPanel : MonoBehaviour{
     }
 
     void Update() {
-        if (Input.GetKeyDown("z")) {
+        if (Input.GetButtonDown("Fire1")) {
             OnConfirmButton();
         }
-        if (Input.GetKeyDown("x")) {
+        if (Input.GetButtonDown("Fire2")) {
             OnCancelButton();
         }
     }

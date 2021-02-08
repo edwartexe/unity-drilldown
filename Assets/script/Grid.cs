@@ -93,7 +93,7 @@ public class Grid : MonoBehaviour {
 
         playersturn = true;
         turnCount = 1;
-        selector.movementLocked = false;
+        selector.actionLocked = false;
         selector.initialize();
         showTutorial();
     }
@@ -220,27 +220,27 @@ public class Grid : MonoBehaviour {
         if (tutorialIndexForLater != 0) {
             switch (tutorialIndexForLater) {
                 case 1:
-                    selector.movementLocked = true;
+                    selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
                     menuTutorial.setValues(globals.basicTutorials);
                     break;
                 case 2:
-                    selector.movementLocked = true;
+                    selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
                     menuTutorial.setValues(globals.tankTutorials);
                     break;
                 case 3:
-                    selector.movementLocked = true;
+                    selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
                     menuTutorial.setValues(globals.scoutTutorials);
                     break;
                 case 4:
-                    selector.movementLocked = true;
+                    selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
                     menuTutorial.setValues(globals.bombTutorials);
                     break;
                 case 5:
-                    selector.movementLocked = true;
+                    selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
                     menuTutorial.setValues(globals.moreEnemiesTutorial);
                     break;
@@ -265,14 +265,19 @@ public class Grid : MonoBehaviour {
 
     }
 
-	// Update is called once per frame
+    public void updateAllNodes() {
+        foreach (Node n in grid) {
+            //only update the visible nodes
+            if (selector.camScript.IsVisibleToCamera(n.nodeSquare.transform,0.1f)) {
+                n.Update();
+            }
+        }
+    }
 
-	void LateUpdate () {
-		for(int i=0;i<gridSizeX;i++) {
-			for(int j=0;j<gridSizeZ;j++) {
-				grid [i, j].Update();
-			}
-		}
+    // Update is called once per frame
+    void LateUpdate () {
+        updateAllNodes();
+
         guimanager.updateBase(turnCount, recursoDinero, recursoGas, relicsaved, relicounter);
         
         if (Input.GetKey("escape")) {
@@ -281,20 +286,19 @@ public class Grid : MonoBehaviour {
 
         
         //DEBUG ONLY
-        if (Input.GetKeyDown("r")) {
+        if (Input.GetKeyDown("2")) {
             foreach (Node n in grid) {
                 n.revealNode();
             }
         }
-        if (Input.GetKeyDown("t")) {
-            foreach (Node n in grid) {
-                gamestate = 3;
-                StartCoroutine("endTurn");
-            }
+        if (Input.GetKeyDown("3")) {
+            gamestate = 3;
+            StartCoroutine("endTurn");
         }
         
 
     }
+    
 
     public void reStart(bool nextStage) {
         foreach (Transform child in groupNode) {
@@ -409,7 +413,7 @@ public class Grid : MonoBehaviour {
 
         if (gamestate == 1) {
             playersturn = false;
-            selector.movementLocked = true;
+            selector.actionLocked = true;
             foreach (GameObject unit in units) {
                 unit_parent unitscript = unit.GetComponent<unit_parent>();
                 unitscript.alreadyMoved = false;
@@ -445,7 +449,7 @@ public class Grid : MonoBehaviour {
                 }
             }*/
 
-            selector.movementLocked = false;
+            selector.actionLocked = false;
             yield return null;
             playersturn = true;
             turnCount++;
@@ -453,7 +457,7 @@ public class Grid : MonoBehaviour {
 
         if (gamestate == 2 || gamestate == 3) {
             yield return null;
-            selector.movementLocked = true;
+            selector.actionLocked = true;
             stageResult.gameObject.SetActive(true);
             stageResult.setValues(gamestate,turnCount,relicsaved,relicounter, recursoDinero, recursoDineroInicial);
         }

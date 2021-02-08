@@ -18,14 +18,14 @@ public class menuStageResult : MonoBehaviour{
     }
 
     void Update() {
-        if (Input.GetKeyDown("z")) {
+        if (Input.GetButtonDown("Fire1")) {
             if (gamestate == 3) {
                 gridMaster.reStart(true);
             } else {
                 gridMaster.reStart(false);
             }
         }
-        if (Input.GetKeyDown("x")) {
+        if (Input.GetButtonDown("Fire2")) {
             gridMaster.reStart(false);
         }
     }

@@ -278,6 +278,7 @@ public class Node{
     }
 
 
+    //Update
     public void Update() {
         nodeSquare.GetComponent<SpriteRenderer>().sprite = defaultSprite;
         nodeSquare.GetComponent<SpriteRenderer>().color = Color.white;
@@ -318,34 +319,34 @@ public class Node{
                         }
                         break;
                     case 9:
-                        if (unit_code.checkBombTargets(this, true)) { //TODO optimize this
+                        if (unit_code.checkBombTargets(this, true)) { 
                             nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                             nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                         }
                         break;
                     case 8:
-                        if (unit_code.checkDropTargets(this, true)) { //TODO optimize this
+                        if (unit_code.checkDropTargets(this, true)) { 
                             nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                             nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                         }
                         break;
 
                     case 5:
-                        if (unit_code.checkHoldTargets(this, true)) { //TODO optimize this
+                        if (unit_code.checkHoldTargets(this, true)) {
                             nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                             nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                         }
                         break;
 
                     case 4:
-                        if (unit_code.checkAttackTargets(this, true)) { //TODO optimize this
+                        if (unit_code.checkAttackTargets(this, true)) {
                             nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                             nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                         }
                         break;
 
                     case 3:
-                        if (unit_code.checkDrillTargets(this, true)) { //TODO optimize this
+                        if (unit_code.checkDrillTargets(this, true)) {
                             nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                             nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                         }
@@ -362,18 +363,13 @@ public class Node{
                         }
                         break;
                 }
-                
             }
-
-            
-            
         }
-
 
         
         if (unitHQ_code.selected) {
             if (gridMaster.selector.state_selector == 7) {
-                if (unitHQ_code.checkCreationSpaces(this, true)) { //TODO optimize this
+                if (unitHQ_code.checkCreationSpaces(this, true)) {
                     nodeSquare.GetComponent<SpriteRenderer>().sprite = focusedSprite;
                     nodeSquare.GetComponent<SpriteRenderer>().color = Color.green;
                 }

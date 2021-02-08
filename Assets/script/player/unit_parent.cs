@@ -17,7 +17,6 @@ public class unit_parent : MonoBehaviour{
     public int basecost;
     public Grid gridMaster;
     public selector selector;
-    public List<Node> movementRange;
     public int temp_gas_usage;
     public int attackRange;
     public relic heldRelic;
@@ -32,6 +31,9 @@ public class unit_parent : MonoBehaviour{
     public int aggro = 0;//testing this value for enemy ai
     public int scanRange;
     public int scanDirection=0;
+
+    public List<Node> movementRange;
+    public List<Node> savedAttackTargets;
     public List<Node> savedScanTargets;
 
 
@@ -208,44 +210,38 @@ public class unit_parent : MonoBehaviour{
         if (nextNode.downNode != null)  { vecinos.Add(nextNode.downNode); }
         if (nextNode.leftNode != null)  { vecinos.Add(nextNode.leftNode); }
 
-        foreach (Node nn in vecinos) {
-            if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    if (nn.nodeOculto) {
-                        return true;
-                    }
+        if (compareNode) {
+            if (vecinos.Contains(targetNode) && targetNode.nodeOculto) {
+                return true;
+            }
+        } else {
+            foreach (Node nn in vecinos) {
+                if (nn.nodeOculto) {
+                    return true;
                 }
-            } else {
-                    if (nn.nodeOculto) {
-                        return true;
-                    }
             }
         }
+
 
         return false;
     }
     
 
     public virtual bool checkAttackTargets(Node targetNode, bool compareNode) {
-        List<Node> vecinos = listAttackNodes();
-
-        foreach (Node nn in vecinos) {
-
-            if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    if (nn.isThereAnEnemyHere() && nn.enemyInThisNode.okToAttack() && !nn.nodeOculto) {
-                        return true;
-                    }
+        //List<Node> vecinos = listAttackNodes();
+        if (compareNode) {
+            if (savedAttackTargets.Contains(targetNode)) {
+                if (targetNode.isThereAnEnemyHere() && targetNode.enemyInThisNode.okToAttack() && !targetNode.nodeOculto) {
+                    return true;
                 }
-            } else {
+            }
+        } else {
+            foreach (Node nn in savedAttackTargets) {
                 if (nn.isThereAnEnemyHere() && nn.enemyInThisNode.okToAttack() && !nn.nodeOculto) {
                     return true;
                 }
             }
-
-
         }
-
         return false;
     }
 
@@ -288,23 +284,21 @@ public class unit_parent : MonoBehaviour{
         if (nextNode.rightNode != null && !nextNode.rightNode.nodeOculto) { vecinos.Add(nextNode.rightNode); }
         if (nextNode.downNode != null && !nextNode.downNode.nodeOculto) { vecinos.Add(nextNode.downNode); }
         if (nextNode.leftNode != null && !nextNode.leftNode.nodeOculto) { vecinos.Add(nextNode.leftNode); }
-
-        foreach (Node nn in vecinos) {
-
-            if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    if (nn.isThereAnItemHere() && nn.itemInThisNode.state == 1 && !nn.tiletype.Contains("locked") ) {
-                        return true;
-                    }
+        
+        if (compareNode) {
+            if (vecinos.Contains(targetNode)) {
+                if (targetNode.isThereAnItemHere() && targetNode.itemInThisNode.state == 1 && !targetNode.tiletype.Contains("locked") ) {
+                    return true;
                 }
-            } else {
+            }
+        } else {
+            foreach (Node nn in vecinos) {
                 if (nn.isThereAnItemHere() && nn.itemInThisNode.state == 1 && !nn.tiletype.Contains("locked")) {
                     return true;
                 }
             }
-
-
         }
+
         return false;
     }
 
@@ -318,23 +312,24 @@ public class unit_parent : MonoBehaviour{
         if (nextNode.downNode != null && !nextNode.downNode.nodeOculto) { vecinos.Add(nextNode.downNode); }
         if (nextNode.leftNode != null && !nextNode.leftNode.nodeOculto) { vecinos.Add(nextNode.leftNode); }
 
-        foreach (Node nn in vecinos) {
+        
 
             if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    //if (nn.tiletype.Equals("HQ")) {
-                    if (!nn.isThereAnEnemyHere()) {
+                if (vecinos.Contains(targetNode)) {
+                    if (!targetNode.isThereAnEnemyHere()) {
                         return true;
                     }
                 }
             } else {
-                if (!nn.isThereAnEnemyHere()) {
-                    return true;
+                foreach (Node nn in vecinos) {
+                    if (!nn.isThereAnEnemyHere()) {
+                        return true;
+                    }
                 }
             }
 
 
-        }
+        
         return false;
     }
 
@@ -355,17 +350,13 @@ public class unit_parent : MonoBehaviour{
 
         Debug.Log("bomb check");
 
-        foreach (Node nn in vecinos) {
-            if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    return true;
-                }
-            } else {
-                return true;
-            }
+        
+        if (compareNode) {
+            return (vecinos.Contains(targetNode));
+        } else {
+            return true;
         }
 
-        return false;
     }
 
     public virtual List<Node> listBombNodes() {

@@ -94,33 +94,27 @@ public class creatorMenu : MonoBehaviour{
 
 
     void Update() {
-            if (Input.GetKeyDown("left") || Input.GetKeyDown("a")) {
-
-            }
-            if (Input.GetKeyDown("down") || Input.GetKeyDown("s")) {
+            if (controls.vertical < 0) {
                 selectedOption = globals.Mod(selectedOption + 1, maxOptions);
                 if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                     highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
                 }
             }
-            if (Input.GetKeyDown("right") || Input.GetKeyDown("d")) {
-
-            }
-            if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) {
+            if (controls.vertical > 0) {
                 selectedOption = globals.Mod(selectedOption - 1, maxOptions);
                 if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                     highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
                 }
             }
-            if (Input.GetKeyDown("z")) {
+            if (Input.GetButtonDown("Fire1")) {
                 //selected trigger onclick event
                 if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                     buttonArray[selectedOption].GetComponent<Button>().onClick.Invoke();
                 }
             }
-            if (Input.GetKeyDown("x")) {
+            if (Input.GetButtonDown("Fire2")) {
                 //Destroy(highlighter);
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.creationMenuCancelCreation();
                 this.gameObject.SetActive(false);
             }
@@ -133,7 +127,7 @@ public class creatorMenu : MonoBehaviour{
             case 0: //drill
                 if (unitHQ_code.checkCreationSpaces(null,false) && (gridMaster.recursoDinero >= globals.drill_create_cost)  ) {
                     cursorParent.create_selector = 1;
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
@@ -143,7 +137,7 @@ public class creatorMenu : MonoBehaviour{
             case 1: //tank
                 if (unitHQ_code.checkCreationSpaces(null, false) && (gridMaster.recursoDinero >= globals.tank_create_cost)  ) {
                     cursorParent.create_selector = 2;
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
@@ -153,7 +147,7 @@ public class creatorMenu : MonoBehaviour{
             case 2: //scout
                 if (unitHQ_code.checkCreationSpaces(null, false) && (gridMaster.recursoDinero >= globals.scout_create_cost)  ) {
                     cursorParent.create_selector = 3;
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
@@ -171,7 +165,7 @@ public class creatorMenu : MonoBehaviour{
             case 4: //bomb
                 if (unitHQ_code.checkCreationSpaces(null, false) && (gridMaster.recursoDinero >= globals.bomb_create_cost)) {
                     cursorParent.create_selector = 4;
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
@@ -181,7 +175,7 @@ public class creatorMenu : MonoBehaviour{
             case 5: //armor scout
                 if (unitHQ_code.checkCreationSpaces(null, false) && (gridMaster.recursoDinero >= globals.tank_create_cost)) {
                     cursorParent.create_selector = 5;
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
@@ -189,7 +183,7 @@ public class creatorMenu : MonoBehaviour{
                 }
                 break;
             case 10: //cancel
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.creationMenuCancelCreation();
                 this.gameObject.SetActive(false);
                 break;

@@ -15,13 +15,9 @@ public class selector : MonoBehaviour {
     public buygasMenu menuBuyGas;
     public scout_scan_result menuScanResult;
 
-    private Vector2 touchOrigin = -Vector2.one; //Used to store location of screen touch origin for mobile controls.
-    int G_horizontal;
-    int G_vertical;
-    bool h_isAxisInUse = false;
-    bool v_isAxisInUse = false;
-    private float SpawnRate = 0.25F;
-    private float timestamp = 0F;
+    //public controls p1_controls;
+
+    public bool actionLocked = false;
     public bool movementLocked = false;
     public unit_parent selectedUnit;
     public enemy_parent selectedEnemy;
@@ -40,6 +36,11 @@ public class selector : MonoBehaviour {
         if (menuStage == null)      { menuStage = (stageMenu)GameObject.Find("menuStage").GetComponent(typeof(stageMenu)); }
         if (menuCreator == null)    { menuCreator = (creatorMenu)GameObject.Find("menuCreator").GetComponent(typeof(creatorMenu)); }
         if (menuBuyGas == null)     { menuBuyGas = (buygasMenu)GameObject.Find("menuBuyGas").GetComponent(typeof(buygasMenu)); }
+
+        /*if (p1_controls == null) {
+            //p1_controls = (controls)GameObject.Find("controls").GetComponent(typeof(controls)); 
+            p1_controls = this.gameObject.GetComponent<controls>();
+        }*/
 
 
         menuUnit.initialize();
@@ -68,10 +69,6 @@ public class selector : MonoBehaviour {
     }
     
 
-    private void OnGUI() {
-        //GUI.Label(new Rect(10, 10, 100, 100), "G_horizontal: " + G_horizontal + " G_vertical: " + G_vertical);
-    }
-
     bool nextDirection(int directionModifier) {
         //direccion de movimiento relativa al angulo de camara. basado en un modulo de las 4 direcciones + el indice de cada direccion
         //indices:
@@ -98,407 +95,177 @@ public class selector : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        int horizontal = 0;     //Used to store the horizontal move direction.
-        int vertical = 0;       //Used to store the vertical move direction.
-   
-//empanada
-#if !UNITY_EDITOR && UNITY_WEBGL
-        UnityEngine.WebGLInput.captureAllKeyboardInput = true; // or false
-#endif
-        //Check if we are running either in the Unity editor or in a standalone build.  
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        controls.calculate();
 
 
-        //Get input from the input manager, round it to an integer and store it
+        if (actionLocked) { return; }
+
         
-            if (Input.GetAxisRaw("Horizontal") != 0) {
-                if (h_isAxisInUse == false || Time.time >= timestamp) {
-                    horizontal = (int)(Input.GetAxisRaw("Horizontal"));
-                    h_isAxisInUse = true;
-                    timestamp = Time.time + SpawnRate;
-                }
-            }
-            if (Input.GetAxisRaw("Horizontal") == 0) {
-                h_isAxisInUse = false;
-            }
-
-            if (Input.GetAxisRaw("Vertical") != 0) {
-                if (v_isAxisInUse == false || Time.time >= timestamp) {
-                    vertical = (int)(Input.GetAxisRaw("Vertical"));
-                    v_isAxisInUse = true;
-                    timestamp = Time.time + SpawnRate;
-                }
-            }
-            if (Input.GetAxisRaw("Vertical") == 0) {
-                v_isAxisInUse = false;
-            }
-            //Check if moving horizontally, if so set vertical to zero.
-            if (horizontal != 0) {
-                vertical = 0;
-            }
-        
-            //----------------------------------------------------------------------------------------------------------------------------------------
-            switch (state_selector) {
-                //--------------------------
-                case 0: // nada seleccionado
-                    if (Input.GetKeyDown("z")) {
-                        if (!cursorNode.nodeOculto && cursorNode.isThereAUnitHere()) {
-                            selectedUnit = cursorNode.unitInThisNode;
-                            if (!selectedUnit.alreadyMoved) {
-                                selectedUnit.listMovementRange();
-                                selectedUnit.selected = true;
-                                state_selector = 1;
-                                //Debug.Log("found unit");
-                            } else {
-                                selectedUnit = null;
-                                //Debug.Log("unit already moved");
-                            }
-
+        //----------------------------------------------------------------------------------------------------------------------------------------
+        switch (state_selector) {
+            case 0: // nada seleccionado
+                if (Input.GetButtonDown("Fire1")) {
+                    if (!cursorNode.nodeOculto && cursorNode.isThereAUnitHere()) {
+                        selectedUnit = cursorNode.unitInThisNode;
+                        if (!selectedUnit.alreadyMoved) {
+                            selectedUnit.listMovementRange();
+                            selectedUnit.selected = true;
+                            state_selector = 1;
+                            //Debug.Log("found unit");
                         } else {
-                            if (!cursorNode.nodeOculto && cursorNode.isThereAnEnemyHere()) {
-                                selectedEnemy = cursorNode.enemyInThisNode;
-                                selectedEnemy.listMovementRange();
-                                selectedEnemy.selected = true;
-                                state_selector = 1;
-                            } else{
-                                if (!cursorNode.nodeOculto && cursorNode.tiletype.Equals("HQ") ) {
-                                    state_selector = 6;
-                                    unitHQ_code.selected = true;
-                                    showCreationMenu();
-                                } else {
-                                    //Debug.Log("no unit");
-                                }
-                            }
+                            selectedUnit = null;
+                            //Debug.Log("unit already moved");
+                        }
 
+                    } else {
+                        if (!cursorNode.nodeOculto && cursorNode.isThereAnEnemyHere()) {
+                            selectedEnemy = cursorNode.enemyInThisNode;
+                            selectedEnemy.listMovementRange();
+                            selectedEnemy.selected = true;
+                            state_selector = 1;
+                        } else{
+                            if (!cursorNode.nodeOculto && cursorNode.tiletype.Equals("HQ") ) {
+                                state_selector = 6;
+                                unitHQ_code.selected = true;
+                                showCreationMenu();
+                            } else {
+                                //Debug.Log("no unit");
+                            }
+                        }
+
+                    }
+                }
+
+                //abrir menu de stage
+                if (Input.GetButtonDown("Fire2")) {
+                    showStageMenu();
+                }
+                break;
+            //--------------------------
+            case 1: //unidad seleccionada
+                if ((selectedUnit != null) && (selectedUnit.selected)) {
+                    //if (selectedUnit.checkDistanceWalk(cursorNode, selectedUnit.thisNode, selectedUnit.thisNode, 0)) {
+                    if (selectedUnit.highLightMoveableNodes(cursorNode)) {
+                        lastPath = pathToCursor;
+                        pathToCursor = pathToAlert(cursorNode, selectedUnit.thisNode, 100);
+                        if (lastPath != null) {
+                            foreach (Node pathnode in lastPath) {
+                                pathnode.pathmember = false;
+                            }
+                        }
+                        foreach (Node pathnode in pathToCursor) {
+                            pathnode.pathmember = true;
                         }
                     }
 
-                    //abrir menu de stage
-                    if (Input.GetKeyDown("x")) {
-                        showStageMenu();
-                    }
-                    break;
-                //--------------------------
-                case 1: //unidad seleccionada
-                    if ((selectedUnit != null) && (selectedUnit.selected)) {
-                        //if (selectedUnit.checkDistanceWalk(cursorNode, selectedUnit.thisNode, selectedUnit.thisNode, 0)) {
+                    if (Input.GetButtonDown("Fire1")) {
                         if (selectedUnit.highLightMoveableNodes(cursorNode)) {
-                            lastPath = pathToCursor;
-                            pathToCursor = pathToAlert(cursorNode, selectedUnit.thisNode, 100);
+                        /*Debug.Log("move here!");
+                        //selectedUnit.lastNode = selectedUnit.thisNode;
+                        //selectedUnit.thisNode = this.cursorNode;
+                        //selectedUnit.updatePosition();
+                        selectedUnit.nextNode = this.cursorNode;
+                        selectedUnit.previewPosition();
+
+                        //disengage code
+                        selectedUnit.selected = false;
+                        selectedUnit.alreadyMoved = true;
+                        selectedUnit = null;
+                        actionLocked = false;
+                        state_selector = 0;
+                        if (lastPath != null) {
+                            foreach (Node pathnode in lastPath) {
+                                pathnode.pathmember = false;
+                            }
+                        }
+                        //open action menu
+                        //actionLocked = true;
+                        state_selector = 2;*/
+
+
+
+                        //Debug.Log("move here!");
+                        selectedUnit.nextNode = this.cursorNode;
+                            selectedUnit.previewPosition();
+                            state_selector = 2;
+                            showBattleMenu();
+                        }
+                    }
+
+                    //cancel movement
+                    if (Input.GetButtonDown("Fire2")) {
+                        battleMenuCancelHighlightMovement();
+                    }
+
+                }
+
+                if ((selectedEnemy != null) && (selectedEnemy.selected)) {
+
+                    //cancel movement
+                    if (Input.GetButtonDown("Fire2")) {
+                        enemyCancelHighlight();
+                    }
+
+                }
+
+
+                    
+                break;
+            case 2:
+                //durante este estado el menu esta abierto
+                //cancel
+                /*if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelMovement();
+                }*/
+                break;
+            case 3:
+                //drill
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
+                        if (selectedUnit.checkDrillTargets(this.cursorNode, true) && this.cursorNode.nodeOculto) {
+                            this.cursorNode.revealNode();
+                            GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps"));//, cursorNode.gridPoint, Quaternion.identity, gridMaster.groupUnit
+                            dust.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, -1);
+                            Destroy(dust, 1.0f);
+                            //disengage code
+                            selectedUnit.lastNode = selectedUnit.thisNode;
+                            selectedUnit.thisNode = selectedUnit.nextNode;
+                            if (selectedUnit.heldRelic != null) {
+                                selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
+                            }
+                            ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
+                            selectedUnit.updatePosition();
+                            selectedUnit.selected = false;
+                            selectedUnit.alreadyMoved = true;
+                            selectedUnit = null;
+                            actionLocked = false;
+                            state_selector = 0;
+                            //gridMaster.addGas(-globals.action_cost_drill);
                             if (lastPath != null) {
                                 foreach (Node pathnode in lastPath) {
                                     pathnode.pathmember = false;
                                 }
                             }
-                            foreach (Node pathnode in pathToCursor) {
-                                pathnode.pathmember = true;
-                            }
-                        }
-
-                        if (Input.GetKeyDown("z")) {
-                            if (selectedUnit.highLightMoveableNodes(cursorNode)) {
-                                /*Debug.Log("move here!");
-                                //selectedUnit.lastNode = selectedUnit.thisNode;
-                                //selectedUnit.thisNode = this.cursorNode;
-                                //selectedUnit.updatePosition();
-                                selectedUnit.nextNode = this.cursorNode;
-                                selectedUnit.previewPosition();
-                            
-                                //disengage code
-                                selectedUnit.selected = false;
-                                selectedUnit.alreadyMoved = true;
-                                selectedUnit = null;
-                                movementLocked = false;
-                                state_selector = 0;
-                                if (lastPath != null) {
-                                    foreach (Node pathnode in lastPath) {
-                                        pathnode.pathmember = false;
-                                    }
-                                }
-                                //open action menu
-                                //movementLocked = true;
-                                state_selector = 2;*/
-
-
-
-                                //Debug.Log("move here!");
-                                selectedUnit.nextNode = this.cursorNode;
-                                selectedUnit.previewPosition();
-                                state_selector = 2;
-                                showBattleMenu();
-                            }
-                        }
-
-                        //cancel movement
-                        if (Input.GetKeyDown("x")) {
-                            battleMenuCancelHighlightMovement();
-                        }
-
-                    }
-
-                    if ((selectedEnemy != null) && (selectedEnemy.selected)) {
-
-                        //cancel movement
-                        if (Input.GetKeyDown("x")) {
-                            enemyCancelHighlight();
-                        }
-
-                    }
-
-
-                    
-                    break;
-                case 2:
-                    //durante este estado el menu esta abierto
-                    //cancel
-                    /*if (Input.GetKeyDown("x")) {
-                        battleMenuCancelMovement();
-                    }*/
-                    break;
-                case 3:
-                    //drill
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-                            if (selectedUnit.checkDrillTargets(this.cursorNode, true) && this.cursorNode.nodeOculto) {
-                                this.cursorNode.revealNode();
-                                GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps"));//, cursorNode.gridPoint, Quaternion.identity, gridMaster.groupUnit
-                                dust.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, -1);
-                                Destroy(dust, 1.0f);
-                                //disengage code
-                                selectedUnit.lastNode = selectedUnit.thisNode;
-                                selectedUnit.thisNode = selectedUnit.nextNode;
-                                if (selectedUnit.heldRelic != null) {
-                                    selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
-                                }
-                                ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
-                                selectedUnit.updatePosition();
-                                selectedUnit.selected = false;
-                                selectedUnit.alreadyMoved = true;
-                                selectedUnit = null;
-                                movementLocked = false;
-                                state_selector = 0;
-                                //gridMaster.addGas(-globals.action_cost_drill);
-                                if (lastPath != null) {
-                                    foreach (Node pathnode in lastPath) {
-                                        pathnode.pathmember = false;
-                                    }
-                                }
-                            }
                         }
                     }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
-                    }
-                    break;
-                case 4:
-                    //attack
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-                            if (selectedUnit.checkAttackTargets(this.cursorNode, true) && this.cursorNode.isThereAnEnemyHere()) {
-                                enemy_parent target = this.cursorNode.enemyInThisNode;
-                                target.health -= selectedUnit.attackPower;
-                                if (target.health<=0) {
-                                    //Destroy(target.gameObject);
-                                    target.getRekt();
-                                }
-                                //disengage code
-                                selectedUnit.lastNode = selectedUnit.thisNode;
-                                selectedUnit.thisNode = selectedUnit.nextNode;
-                                if (selectedUnit.heldRelic != null) {
-                                    selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
-                                }
-                                ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
-                                selectedUnit.updatePosition();
-                                selectedUnit.selected = false;
-                                selectedUnit.alreadyMoved = true;
-                                selectedUnit = null;
-                                movementLocked = false;
-                                state_selector = 0;
-                                //gridMaster.addGas(-globals.action_cost_attack);
-                                if (lastPath != null) {
-                                    foreach (Node pathnode in lastPath) {
-                                        pathnode.pathmember = false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
-                    }
-                    break;
+                }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
+            case 4:
+                //attack
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
 
-                case 5://hold
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-                            if (selectedUnit.checkHoldTargets(this.cursorNode, true) && this.cursorNode.isThereAnItemHere()) {
-
-                                relic targetrelic = (relic) cursorNode.itemInThisNode;
-                                selectedUnit.heldRelic = targetrelic;
-                                targetrelic.onTake(true);
-                                targetrelic.transform.position = selectedUnit.transform.position;
-                                //disengage code
-                                selectedUnit.lastNode = selectedUnit.thisNode;
-                                selectedUnit.thisNode = selectedUnit.nextNode;
-                                if (selectedUnit.heldRelic != null) {
-                                    selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
-                                }
-                                ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
-                                selectedUnit.updatePosition();
-                                selectedUnit.selected = false;
-                                selectedUnit.alreadyMoved = true;
-                                selectedUnit = null;
-                                movementLocked = false;
-                                state_selector = 0;
-                                //gridMaster.addGas(-globals.action_cost_hold);
-                                if (lastPath != null) {
-                                    foreach (Node pathnode in lastPath) {
-                                        pathnode.pathmember = false;
-                                    }
-                                }
-                                gridMaster.wakeUpStatues();//only for wake up boss check
-
-                            }
-                        }
-                    }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
-                    }
-                    break;
-
-                case 6://create unit
-                    //buffer state
-                    //create unit menu active
-                    break;
-
-                case 7:
-                    //set created unit in place
-                    if (Input.GetKeyDown("z")) {
-                        if ((unitHQ_code != null) && unitHQ_code.selected && unitHQ_code.checkCreationSpaces(this.cursorNode, true) && (create_selector!=0) ) {
-
-                            int createcost = globals.drill_create_cost;
-                            unit_parent selected_creation_unit = gridMaster.unit_drill_prefab;
-                            switch (create_selector) {
-                                case 1:
-                                    createcost = globals.drill_create_cost;
-                                    selected_creation_unit = gridMaster.unit_drill_prefab;
-                                    break;
-                                case 2:
-                                    createcost = globals.tank_create_cost;
-                                    selected_creation_unit = gridMaster.unit_tank_prefab;
-                                    break;
-                                case 3:
-                                    createcost = globals.scout_create_cost;
-                                    selected_creation_unit = gridMaster.unit_scout_prefab;
-                                    break;
-                                case 4:
-                                    createcost = globals.bomb_create_cost;
-                                    selected_creation_unit = gridMaster.unit_bomb_prefab;
-                                    break;
-                                case 5:
-                                    createcost = globals.tank_create_cost;
-                                    selected_creation_unit = gridMaster.unit_armoredS_prefab;
-                                    break;
-                            }
-
-                            if (gridMaster.recursoDinero >= 0) {
-                                //create unit
-                                unit_parent new_creation_unit = Instantiate(selected_creation_unit, new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0), Quaternion.identity, gridMaster.groupUnit);
-                                new_creation_unit.alreadyMoved = true; 
-                                gridMaster.addDinero(-createcost);
-                                gridMaster.updateActors();
-
-                                //unset state
-                                unitHQ_code.selected = false;
-                                unitHQ_code.alreadyMoved = true;
-                                movementLocked = false;
-                                state_selector = 0;
-                            }
-
-                            
-                        }
-                    }
-
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        creationMenuCancelCreation();
-                    }
-                    break;
-
-                case 8://drop
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-                            if (selectedUnit.checkDropTargets(cursorNode, true)) {
-
-                                if (cursorNode.tiletype.Equals("HQ")) {
-                                    selectedUnit.heldRelic.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-                                    selectedUnit.heldRelic.onSave();
-                                    selectedUnit.heldRelic = null;
-                                } else {
-                                    selectedUnit.heldRelic.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
-                                    selectedUnit.heldRelic.onReveal();
-                                    selectedUnit.heldRelic = null;
-                                }
-                                //disengage code
-                                selectedUnit.lastNode = selectedUnit.thisNode;
-                                selectedUnit.thisNode = selectedUnit.nextNode;
-                                if (selectedUnit.heldRelic != null) {
-                                    selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
-                                }
-                                ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
-                                selectedUnit.updatePosition();
-                                selectedUnit.selected = false;
-                                selectedUnit.alreadyMoved = true;
-                                selectedUnit = null;
-                                movementLocked = false;
-                                state_selector = 0;
-                                if (lastPath != null) {
-                                    foreach (Node pathnode in lastPath) {
-                                        pathnode.pathmember = false;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
-                    }
-                    break;
-                case 9:
-                    //go bomb
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-
-                            //this.cursorNode.revealNode();
-                            GameObject explotion_inst = Instantiate((GameObject)Resources.Load("bomb_explotion"), this.transform.position, Quaternion.identity, gridMaster.groupUnit);
-                            Destroy(explotion_inst, 1.0f);
-                            //GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps2"));
-                            //dust.transform.position = new Vector3(selectedUnit.nextNode.gridPoint.x, selectedUnit.nextNode.gridPoint.y, -1);
-                            //Destroy(dust, 2.0f);
-
-                            foreach (Node nnn in selectedUnit.listBombNodes() ) {
-                                if (nnn.nodeOculto) {
-                                    nnn.revealNode();
-                                } else{
-                                    if (nnn.isThereAnEnemyHere()) {
-                                        nnn.enemyInThisNode.health -= globals.bombExplodeStat;
-                                        if (nnn.enemyInThisNode.health <= 0) {
-                                            nnn.enemyInThisNode.getRekt();
-                                        }
-                                    }
-                                    //friendly fire off is more fun
-                                    /*if (nnn.isThereAUnitHere()) {
-                                        nnn.unitInThisNode.health -= globals.bombExplodeStat;
-                                        if (nnn.unitInThisNode.health <= 0) {
-                                            nnn.unitInThisNode.getRekt();
-                                        }
-                                    }*/
-                                }
+                        selectedUnit.savedAttackTargets = selectedUnit.listAttackNodes();
+                        if (selectedUnit.checkAttackTargets(this.cursorNode, true) && this.cursorNode.isThereAnEnemyHere()) {
+                            enemy_parent target = this.cursorNode.enemyInThisNode;
+                            target.health -= selectedUnit.attackPower;
+                            if (target.health<=0) {
+                                //Destroy(target.gameObject);
+                                target.getRekt();
                             }
                             //disengage code
                             selectedUnit.lastNode = selectedUnit.thisNode;
@@ -510,175 +277,329 @@ public class selector : MonoBehaviour {
                             selectedUnit.updatePosition();
                             selectedUnit.selected = false;
                             selectedUnit.alreadyMoved = true;
-                            unit_parent tempunit = selectedUnit;
                             selectedUnit = null;
-                            movementLocked = false;
+                            actionLocked = false;
                             state_selector = 0;
-                            //gridMaster.addGas(-globals.action_cost_base_bomb);
-
-                            //destroy bomb
-                            tempunit.detonate();
-
+                            //gridMaster.addGas(-globals.action_cost_attack);
                             if (lastPath != null) {
                                 foreach (Node pathnode in lastPath) {
                                     pathnode.pathmember = false;
                                 }
                             }
-                            
                         }
                     }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
-                    }
-                    break;
-
-                case 10:
-                    //scanplace
-                    movementLocked = true;
-                    if ((selectedUnit != null) && (selectedUnit.selected) && (horizontal != 0 || vertical != 0)) {
-                        if (horizontal == -1 && vertical == 0) {
-                            selectedUnit.scanDirection = 0;
-                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
-
-                    }
-                    if (horizontal == 0 && vertical == -1) {
-                            selectedUnit.scanDirection = 1;
-                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
-
-                    }
-                    if (horizontal == 1 && vertical == 0) {
-                            selectedUnit.scanDirection = 2;
-                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
-                    }
-                    if (horizontal == 0 && vertical == 1) {
-                            selectedUnit.scanDirection = 3;
-                            selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
-                    }
                 }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
 
+            case 5://hold
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
+                        if (selectedUnit.checkHoldTargets(this.cursorNode, true) && this.cursorNode.isThereAnItemHere()) {
 
-                    if (Input.GetKeyDown("z")) {
-                        if ((selectedUnit != null) && (selectedUnit.selected)) {
-                            int enemyScan = 0; 
-                            int enemyStrongScan = 0;
-                            int relicScan = 0;
-                            int nestScan = 0;
-
-                            //disengage part 1
+                            relic targetrelic = (relic) cursorNode.itemInThisNode;
+                            selectedUnit.heldRelic = targetrelic;
+                            targetrelic.onTake(true);
+                            targetrelic.transform.position = selectedUnit.transform.position;
+                            //disengage code
                             selectedUnit.lastNode = selectedUnit.thisNode;
                             selectedUnit.thisNode = selectedUnit.nextNode;
                             if (selectedUnit.heldRelic != null) {
-                                selectedUnit.heldRelic.thisNode = selectedUnit.nextNode;
+                                selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
                             }
                             ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
                             selectedUnit.updatePosition();
-
-                            selectedUnit.savedScanTargets=selectedUnit.getScanTargets2();
-                            foreach (Node nnn in selectedUnit.savedScanTargets) {
-                                if (nnn.isThereAnEnemyHere()) {
-                                    if (nnn.enemyInThisNode.GetComponent<enemy_parent>().enemyClass.Equals(globals.nestName)) {
-                                        nestScan++;
-                                    } else {
-                                        if (nnn.enemyInThisNode.GetComponent<enemy_parent>().maxHealth>20) {
-                                            enemyStrongScan++;
-                                        } else {
-                                            enemyScan++;
-                                        }
-                                    }
-                                }
-                                if (nnn.isThereAnItemHere() && !nnn.isHQhere() && (!nnn.isThereAUnitHere() || (nnn.isThereAUnitHere() && nnn.itemInThisNode.state!=2 )) ) {
-                                    relicScan++;
-                                }
-                            }
-
-                            
-                            state_selector = 11;
-                            //movementLocked = true;
-                            movementLocked = false;
-                            menuScanResult.gameObject.SetActive(true);
-                            menuScanResult.setValues(selectedUnit,enemyScan,enemyStrongScan,nestScan,relicScan);
-                            //Debug.Log("Enemy: " + enemyScan + "Big-Enemy: " + enemyStrongScan + " Nest: " + nestScan + " Relic: " + relicScan);
-
-                            //TODO
-                            //mostrar enemigos y relics contados
-
-
-                            //disengage code part 2
-                            /*selectedUnit.selected = false;
+                            selectedUnit.selected = false;
+                            selectedUnit.alreadyMoved = true;
                             selectedUnit = null;
-                            movementLocked = false;
-                            //gridMaster.addGas(-globals.action_cost_scan);
+                            actionLocked = false;
+                            state_selector = 0;
+                            //gridMaster.addGas(-globals.action_cost_hold);
                             if (lastPath != null) {
                                 foreach (Node pathnode in lastPath) {
                                     pathnode.pathmember = false;
                                 }
-                            }*/
+                            }
+                            gridMaster.wakeUpStatues();//only for wake up boss check
 
                         }
                     }
-                    //cancel
-                    if (Input.GetKeyDown("x")) {
-                        battleMenuCancelAction();
+                }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
+
+            case 6://create unit
+                //buffer state
+                //create unit menu active
+                break;
+
+            case 7:
+                //set created unit in place
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((unitHQ_code != null) && unitHQ_code.selected && unitHQ_code.checkCreationSpaces(this.cursorNode, true) && (create_selector!=0) ) {
+
+                        int createcost = globals.drill_create_cost;
+                        unit_parent selected_creation_unit = gridMaster.unit_drill_prefab;
+                        switch (create_selector) {
+                            case 1:
+                                createcost = globals.drill_create_cost;
+                                selected_creation_unit = gridMaster.unit_drill_prefab;
+                                break;
+                            case 2:
+                                createcost = globals.tank_create_cost;
+                                selected_creation_unit = gridMaster.unit_tank_prefab;
+                                break;
+                            case 3:
+                                createcost = globals.scout_create_cost;
+                                selected_creation_unit = gridMaster.unit_scout_prefab;
+                                break;
+                            case 4:
+                                createcost = globals.bomb_create_cost;
+                                selected_creation_unit = gridMaster.unit_bomb_prefab;
+                                break;
+                            case 5:
+                                createcost = globals.tank_create_cost;
+                                selected_creation_unit = gridMaster.unit_armoredS_prefab;
+                                break;
+                        }
+
+                        if (gridMaster.recursoDinero >= 0) {
+                            //create unit
+                            unit_parent new_creation_unit = Instantiate(selected_creation_unit, new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0), Quaternion.identity, gridMaster.groupUnit);
+                            new_creation_unit.alreadyMoved = true; 
+                            gridMaster.addDinero(-createcost);
+                            gridMaster.updateActors();
+
+                            //unset state
+                            unitHQ_code.selected = false;
+                            unitHQ_code.alreadyMoved = true;
+                            actionLocked = false;
+                            state_selector = 0;
+                        }
+
+                            
                     }
+                }
+
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    creationMenuCancelCreation();
+                }
+                break;
+
+            case 8://drop
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
+                        if (selectedUnit.checkDropTargets(cursorNode, true)) {
+
+                            if (cursorNode.tiletype.Equals("HQ")) {
+                                selectedUnit.heldRelic.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                                selectedUnit.heldRelic.onSave();
+                                selectedUnit.heldRelic = null;
+                            } else {
+                                selectedUnit.heldRelic.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
+                                selectedUnit.heldRelic.onReveal();
+                                selectedUnit.heldRelic = null;
+                            }
+                            //disengage code
+                            selectedUnit.lastNode = selectedUnit.thisNode;
+                            selectedUnit.thisNode = selectedUnit.nextNode;
+                            if (selectedUnit.heldRelic != null) {
+                                selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
+                            }
+                            ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
+                            selectedUnit.updatePosition();
+                            selectedUnit.selected = false;
+                            selectedUnit.alreadyMoved = true;
+                            selectedUnit = null;
+                            actionLocked = false;
+                            state_selector = 0;
+                            if (lastPath != null) {
+                                foreach (Node pathnode in lastPath) {
+                                    pathnode.pathmember = false;
+                                }
+                            }
+
+                        }
+                    }
+                }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
+            case 9:
+                //go bomb
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
+
+                        //this.cursorNode.revealNode();
+                        GameObject explotion_inst = Instantiate((GameObject)Resources.Load("bomb_explotion"), selectedUnit.transform.position, Quaternion.identity, gridMaster.groupUnit);
+                        Destroy(explotion_inst, 1.0f);
+                        //GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps2"));
+                        //dust.transform.position = new Vector3(selectedUnit.nextNode.gridPoint.x, selectedUnit.nextNode.gridPoint.y, -1);
+                        //Destroy(dust, 2.0f);
+
+                        foreach (Node nnn in selectedUnit.listBombNodes() ) {
+                            if (nnn.nodeOculto) {
+                                nnn.revealNode();
+                            } else{
+                                if (nnn.isThereAnEnemyHere()) {
+                                    nnn.enemyInThisNode.health -= globals.bombExplodeStat;
+                                    if (nnn.enemyInThisNode.health <= 0) {
+                                        nnn.enemyInThisNode.getRekt();
+                                    }
+                                }
+                                //friendly fire off is more fun
+                                /*if (nnn.isThereAUnitHere()) {
+                                    nnn.unitInThisNode.health -= globals.bombExplodeStat;
+                                    if (nnn.unitInThisNode.health <= 0) {
+                                        nnn.unitInThisNode.getRekt();
+                                    }
+                                }*/
+                            }
+                        }
+                        //disengage code
+                        selectedUnit.lastNode = selectedUnit.thisNode;
+                        selectedUnit.thisNode = selectedUnit.nextNode;
+                        if (selectedUnit.heldRelic != null) {
+                            selectedUnit.heldRelic.thisNode = selectedUnit.thisNode;
+                        }
+                        ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
+                        selectedUnit.updatePosition();
+                        selectedUnit.selected = false;
+                        selectedUnit.alreadyMoved = true;
+                        unit_parent tempunit = selectedUnit;
+                        selectedUnit = null;
+                        actionLocked = false;
+                        state_selector = 0;
+                        //gridMaster.addGas(-globals.action_cost_base_bomb);
+
+                        //destroy bomb
+                        tempunit.detonate();
+
+                        if (lastPath != null) {
+                            foreach (Node pathnode in lastPath) {
+                                pathnode.pathmember = false;
+                            }
+                        }
+                            
+                    }
+                }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
+
+            case 10:
+            //scanplace
+                movementLocked = true;
+                if ((selectedUnit != null) && (selectedUnit.selected) && (controls.horizontal != 0 || controls.vertical != 0)) {
+                    if (controls.horizontal == -1 && controls.vertical == 0) {
+                        selectedUnit.scanDirection = 0;
+                        selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                    if (controls.horizontal == 0 && controls.vertical == -1) {
+                        selectedUnit.scanDirection = 1;
+                        selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                    if (controls.horizontal == 1 && controls.vertical == 0) {
+                        selectedUnit.scanDirection = 2;
+                        selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                    if (controls.horizontal == 0 && controls.vertical == 1) {
+                        selectedUnit.scanDirection = 3;
+                        selectedUnit.savedScanTargets = selectedUnit.getScanTargets2();
+                    }
+                }
+
+
+                if (Input.GetButtonDown("Fire1")) {
+                    if ((selectedUnit != null) && (selectedUnit.selected)) {
+                        int enemyScan = 0; 
+                        int enemyStrongScan = 0;
+                        int relicScan = 0;
+                        int nestScan = 0;
+
+                        //disengage part 1
+                        selectedUnit.lastNode = selectedUnit.thisNode;
+                        selectedUnit.thisNode = selectedUnit.nextNode;
+                        if (selectedUnit.heldRelic != null) {
+                            selectedUnit.heldRelic.thisNode = selectedUnit.nextNode;
+                        }
+                        ////gridMaster.addGas(-selectedUnit.temp_gas_usage);
+                        selectedUnit.updatePosition();
+
+                        selectedUnit.savedScanTargets=selectedUnit.getScanTargets2();
+                        foreach (Node nnn in selectedUnit.savedScanTargets) {
+                            if (nnn.isThereAnEnemyHere()) {
+                                if (nnn.enemyInThisNode.GetComponent<enemy_parent>().enemyClass.Equals(globals.nestName)) {
+                                    nestScan++;
+                                } else {
+                                    if (nnn.enemyInThisNode.GetComponent<enemy_parent>().maxHealth>20) {
+                                        enemyStrongScan++;
+                                    } else {
+                                        enemyScan++;
+                                    }
+                                }
+                            }
+                            if (nnn.isThereAnItemHere() && !nnn.isHQhere() && (!nnn.isThereAUnitHere() || (nnn.isThereAUnitHere() && nnn.itemInThisNode.state!=2 )) ) {
+                                relicScan++;
+                            }
+                        }
+
+                            
+                        state_selector = 11;
+                        //actionLocked = true;
+                        movementLocked = false;
+                        menuScanResult.gameObject.SetActive(true);
+                        menuScanResult.setValues(selectedUnit,enemyScan,enemyStrongScan,nestScan,relicScan);
+                        //Debug.Log("Enemy: " + enemyScan + "Big-Enemy: " + enemyStrongScan + " Nest: " + nestScan + " Relic: " + relicScan);
+
+                        //TODO
+                        //mostrar enemigos y relics contados
+
+
+                        //disengage code part 2
+                        /*selectedUnit.selected = false;
+                        selectedUnit = null;
+                        actionLocked = false;
+                        //gridMaster.addGas(-globals.action_cost_scan);
+                        if (lastPath != null) {
+                            foreach (Node pathnode in lastPath) {
+                                pathnode.pathmember = false;
+                            }
+                        }*/
+
+                    }
+                }
+                //cancel
+                if (Input.GetButtonDown("Fire2")) {
+                    battleMenuCancelAction();
+                }
+                break;
+            case 11:
+                /*if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) {
+                    closeScanMenu();
+                }*/
                     break;
-                case 11:
-                    /*if (Input.GetKeyDown("z") || Input.GetKeyDown("x")) {
-                        closeScanMenu();
-                    }*/
-                        break;
-            }
+        }
 
-
-
-
-
-        //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        //Check if Input has registered more than zero touches
-        if (Input.touchCount > 0){
-                //Store the first touch detected.
-                Touch myTouch = Input.touches[0];
-
-                //Check if the phase of that touch equals Began
-                if (myTouch.phase == TouchPhase.Began){
-                    //If so, set touchOrigin to the position of that touch
-                    touchOrigin = myTouch.position;
-                }
-
-                //If the touch phase is not Began, and instead is equal to Ended and the x of touchOrigin is greater or equal to zero:
-                else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0) {
-                    //Set touchEnd to equal the position of this touch
-                    Vector2 touchEnd = myTouch.position;
-
-                    //Calculate the difference between the beginning and end of the touch on the x axis.
-                    float x = touchEnd.x - touchOrigin.x;
-
-                    //Calculate the difference between the beginning and end of the touch on the y axis.
-                    float y = touchEnd.y - touchOrigin.y;
-
-                    //Set touchOrigin.x to -1 so that our else if statement will evaluate false and not repeat immediately.
-                    touchOrigin.x = -1;
-
-                    //Check if the difference along the x axis is greater than the difference along the y axis.
-                    if (Mathf.Abs(x) > Mathf.Abs(y))
-                        //If x is greater than zero, set horizontal to 1, otherwise set it to -1
-                        horizontal = x > 0 ? 1 : -1;
-                    else
-                        //If y is greater than zero, set horizontal to 1, otherwise set it to -1
-                        vertical = y > 0 ? 1 : -1;
-                }
-            }
-
-#endif //End of mobile platform dependendent compilation section started above with #elif
         //Check if we have a non-zero value for horizontal or vertical
+
+        int G_horizontal=0;
+        int G_vertical=0;
         if (!movementLocked) {
-            if (horizontal != 0 || vertical != 0) {
-                //Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
-                //Pass in horizontal and vertical as parameters to specify the direction to move Player in.
-                //AttemptMove<Wall>(horizontal, vertical);
-                G_horizontal = horizontal;
-                G_vertical = vertical;
+            if (controls.horizontal != 0 || controls.vertical != 0) {
+                G_horizontal = controls.horizontal;
+                G_vertical = controls.vertical;
                 //Debug.Log("horizontal: " + horizontal + " vertical: " + vertical);
             }
 
@@ -712,16 +633,17 @@ public class selector : MonoBehaviour {
                 //camScript.alignCamera(cursorNode, false);
             }
         }
-        G_horizontal = 0;
-        G_vertical = 0; 
 
 
+        /*if (controls.vertical != 0 ||
+                controls.horizontal != 0 ||
+                Input.GetButtonDown("Fire1") ||
+                Input.GetButtonDown("Fire2")
+            ) {
+            gridMaster.updateAllNodes();
+        }*/
     }
-
-
-
-
-
+    
 
 
 
@@ -744,14 +666,14 @@ public class selector : MonoBehaviour {
     }
 
     public void showStageMenu() {
-        this.movementLocked = true;
+        this.actionLocked = true;
         menuStage.gameObject.SetActive(true);
     }
 
     //----------------start battle menu
 
     public void showBattleMenu() {
-        this.movementLocked = true;
+        this.actionLocked = true;
         menuUnit.gameObject.SetActive(true);
     }
 
@@ -793,7 +715,7 @@ public class selector : MonoBehaviour {
             selectedUnit.selected = false;
             selectedUnit.alreadyMoved = true;
             selectedUnit = null;
-            movementLocked = false;
+            actionLocked = false;
             state_selector = 0;
             if (lastPath != null) {
                 foreach (Node pathnode in lastPath) {
@@ -823,7 +745,7 @@ public class selector : MonoBehaviour {
     public void battleMenuCancelMovement() {
         if (selectedUnit != null) {
             selectedUnit.StopCoroutine("MoveAlongPath");
-            movementLocked = false;
+            actionLocked = false;
             state_selector = 1;
             selectedUnit.updatePosition();
         } else {
@@ -832,7 +754,7 @@ public class selector : MonoBehaviour {
     }
 
     public void battleMenuCancelAction() {
-        this.movementLocked = true;
+        this.actionLocked = true;
         this.state_selector = 2;
         this.cursorNode = selectedUnit.nextNode;
         transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
@@ -842,13 +764,13 @@ public class selector : MonoBehaviour {
     //----------------end battle menu
 
     public void showCreationMenu() {
-        this.movementLocked = true;
+        this.actionLocked = true;
         menuCreator.gameObject.SetActive(true);
     }
 
     public void creationMenuCancelCreation() {
         unitHQ_code.selected = false;
-        movementLocked = false;
+        actionLocked = false;
         state_selector = 0;
     }
 
@@ -866,7 +788,7 @@ public class selector : MonoBehaviour {
         selectedUnit.alreadyMoved = true;
         selectedUnit.selected = false;
         selectedUnit = null;
-        movementLocked = false;
+        actionLocked = false;
         state_selector = 0;
         //gridMaster.addGas(-globals.action_cost_scan);
         if (lastPath != null) {
@@ -876,7 +798,7 @@ public class selector : MonoBehaviour {
         }
     }
     public void closeTutorial() {
-        movementLocked = false;
+        actionLocked = false;
         state_selector = 0;
     }
 
@@ -888,7 +810,7 @@ public class selector : MonoBehaviour {
             selectedUnit.isActive = true;
             selectedUnit.selected = false;
             selectedUnit = null;
-            movementLocked = false;
+            actionLocked = false;
             state_selector = 0;
         }
     }
@@ -903,7 +825,7 @@ public class selector : MonoBehaviour {
             selectedUnit.alreadyMoved = true;
             selectedUnit.isActive = false; //main effect.
             selectedUnit = null;
-            movementLocked = false;
+            actionLocked = false;
             state_selector = 0;
             if (lastPath != null) {
                 foreach (Node pathnode in lastPath) {

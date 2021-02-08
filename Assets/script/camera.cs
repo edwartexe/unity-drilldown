@@ -36,6 +36,14 @@ public class camera : MonoBehaviour{
         follow = true;
     }
 
+    public bool IsVisibleToCamera(Transform transform, float radius) {
+        Vector3 visTest = this.gameObject.GetComponent<Camera>().WorldToViewportPoint(transform.position);
+        bool res = (visTest.x+radius >= 0 && visTest.y+ radius >= 0) && (visTest.x- radius <= 1 && visTest.y- radius <= 1);
+        //Debug.Log("Transform="+transform +" test="+visTest + " IsVisibleToCamera= " + res);
+        return res;
+    }
+
+
     // Update is called once per frame
     void Update() {
     }
@@ -64,7 +72,7 @@ public class camera : MonoBehaviour{
             }
         }
 
-        if (Input.GetKeyDown("y")) { //DEBUG ONLY
+        if (Input.GetKeyDown("1")) { //DEBUG ONLY
             follow = !follow;
         }
     }

@@ -61,6 +61,7 @@ public class battleMenu : MonoBehaviour {
             unit_parent currentUnit = gridMaster.selector.selectedUnit;
 
             currentUnit.savedScanTargets = currentUnit.getScanTargets2();
+            currentUnit.savedAttackTargets = currentUnit.listAttackNodes();
 
             if (currentUnit.isActive) {
                 if (currentUnit.checkAttackTargets(currentUnit.thisNode, false)) { allOptions.Add(new battleOption(0, "Attack", globals.action_cost_attack)); }
@@ -122,33 +123,27 @@ public class battleMenu : MonoBehaviour {
 
 
     void Update() {
-        if (Input.GetKeyDown("left") || Input.GetKeyDown("a")) {
-
-        }
-        if (Input.GetKeyDown("down") || Input.GetKeyDown("s")) {
+        if (controls.vertical < 0) {
             selectedOption = globals.Mod(selectedOption + 1, maxOptions);
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
             }
         }
-        if (Input.GetKeyDown("right") || Input.GetKeyDown("d")) {
-
-        }
-        if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) {
+        if (controls.vertical > 0) {
             selectedOption = globals.Mod(selectedOption-1, maxOptions); 
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
             }
         }
-        if (Input.GetKeyDown("z")) {
+        if (Input.GetButtonDown("Fire1")) {
             //selected trigger onclick event
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 buttonArray[selectedOption].GetComponent<Button>().onClick.Invoke();
             }
         }
-        if (Input.GetKeyDown("x")) {
+        if (Input.GetButtonDown("Fire2")) {
             //Destroy(highlighter);
-            cursorParent.movementLocked = false;
+            cursorParent.actionLocked = false;
             cursorParent.battleMenuCancelMovement();
             this.gameObject.SetActive(false);
         }
@@ -158,7 +153,7 @@ public class battleMenu : MonoBehaviour {
         switch (optionCode) {
             case 0: //attack
                 if (gridMaster.recursoGas>=globals.action_cost_attack) {
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.battleMenuAttack();
                     this.gameObject.SetActive(false);
                     gridMaster.updateActors();
@@ -168,7 +163,7 @@ public class battleMenu : MonoBehaviour {
                 break;
             case 1: //drill
                 if (gridMaster.recursoGas >= globals.action_cost_drill) {
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.battleMenuDrill();
                     this.gameObject.SetActive(false);
                     gridMaster.updateActors();
@@ -178,7 +173,7 @@ public class battleMenu : MonoBehaviour {
                 break;
             case 2: //hold
                 if (gridMaster.recursoGas >= globals.action_cost_hold) {
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.battleMenuHold();
                     this.gameObject.SetActive(false);
                     gridMaster.updateActors();
@@ -188,39 +183,39 @@ public class battleMenu : MonoBehaviour {
                 }
                 break;
             case 3: //wait
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.battleMenuWait();
                 this.gameObject.SetActive(false);
                 gridMaster.updateActors();
                 break;
                 
             case 4: //turn on
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.turnOnUnit();
                 this.gameObject.SetActive(false);
                 gridMaster.updateActors();
                 break;
             case 5: //turn off
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.turnOffUnit();
                 this.gameObject.SetActive(false);
                 gridMaster.updateActors();
                 break;
             case 6: //drop
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.battleMenuDrop();
                 this.gameObject.SetActive(false);
                 gridMaster.updateActors();
                 break;
             case 7: //detonate
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.battleMenuDetonate();
                 this.gameObject.SetActive(false);
                 gridMaster.updateActors();
                 break;
             case 8: //scan
                 if (gridMaster.recursoGas >= globals.action_cost_scan) {
-                    cursorParent.movementLocked = false;
+                    cursorParent.actionLocked = false;
                     cursorParent.battleMenuScan();
                     this.gameObject.SetActive(false);
                     gridMaster.updateActors();
@@ -229,7 +224,7 @@ public class battleMenu : MonoBehaviour {
                 }
                 break;
             case 10: //cancel
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 cursorParent.battleMenuCancelMovement();
                 this.gameObject.SetActive(false);
                 break;

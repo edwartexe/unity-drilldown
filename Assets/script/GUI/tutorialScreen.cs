@@ -25,7 +25,7 @@ public class tutorialScreen : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        if (Input.GetKeyDown("z") || Input.GetKeyDown("x") || Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.RightArrow)) {
             nextScreen();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
@@ -36,7 +36,7 @@ public class tutorialScreen : MonoBehaviour{
     }
 
     public void setValues(List<tutorial_item> _items) {
-        cursorParent.movementLocked = true;
+        cursorParent.actionLocked = true;
         items = _items;
         i = 0;
         setScreen();

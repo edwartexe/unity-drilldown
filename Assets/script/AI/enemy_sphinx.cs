@@ -315,13 +315,13 @@ public class enemy_sphinx : enemy_parent {
 
     public IEnumerator wakeUpAnimation() {
         selector.camScript.focusedObject = this.gameObject;
-        selector.movementLocked = true;
+        selector.actionLocked = true;
 
         mainAnimator.Play("sphinx_wakeup");
         yield return new WaitForSeconds(1.5f);
 
         selector.camScript.focusedObject = null;
-        selector.movementLocked = false;
+        selector.actionLocked = false;
     }
 
     public override bool okToAttack() {

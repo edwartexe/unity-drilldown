@@ -23,7 +23,7 @@ public class scout_scan_result : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown("z") || Input.GetKeyDown("x")) {
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) {
             closeMenu();
         }
     }

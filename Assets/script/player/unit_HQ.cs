@@ -36,12 +36,13 @@ public class unit_HQ : MonoBehaviour{
  
     public virtual bool checkCreationSpaces(Node targetNode, bool compareNode) {
 
-        foreach (Node nn in creationRange) {
-            if (compareNode) {
-                if (targetNode.Equals(nn)) {
-                    return (nn.canUnitCross() && !nn.isThereAUnitHere());
-                }
-            } else {
+        
+        if (compareNode) {
+            if (creationRange.Contains(targetNode)) {
+                return (targetNode.canUnitCross() && !targetNode.isThereAUnitHere());
+            }
+        } else {
+            foreach (Node nn in creationRange) {
                 if (nn.canUnitCross() && !nn.isThereAUnitHere()) {
                     return true;
                 }

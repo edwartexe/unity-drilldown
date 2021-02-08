@@ -102,6 +102,10 @@ MonoBehaviour:
   menuCreator: {fileID: 0}
   menuBuyGas: {fileID: 0}
   menuScanResult: {fileID: 0}
+  p1_controls: {fileID: 0}
+  G_horizontal: 0
+  G_vertical: 0
+  actionLocked: 0
   movementLocked: 0
   selectedUnit: {fileID: 0}
   selectedEnemy: {fileID: 0}

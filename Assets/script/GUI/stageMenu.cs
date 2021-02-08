@@ -76,26 +76,26 @@ public class stageMenu : MonoBehaviour {
 
 
     void Update() {
-        if (Input.GetKeyDown("down") || Input.GetKeyDown("s")) {
+        if (controls.vertical<0) {
             selectedOption = globals.Mod(selectedOption + 1, maxOptions);
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
             }
         }
-        if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) {
+        if (controls.vertical>0) {
             selectedOption = globals.Mod(selectedOption - 1, maxOptions);
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 highlighter.GetComponent<RectTransform>().localPosition = buttonArray[selectedOption].GetComponent<RectTransform>().localPosition;
             }
         }
-        if (Input.GetKeyDown("z")) {
+        if (Input.GetButtonDown("Fire1")) {
             //selected trigger onclick event
             if (buttonArray.Count > 0 && selectedOption >= 0 && selectedOption <= maxOptions) {
                 buttonArray[selectedOption].GetComponent<Button>().onClick.Invoke();
             }
         }
-        if (Input.GetKeyDown("x")) {
-            cursorParent.movementLocked = false;
+        if (Input.GetButtonDown("Fire2")) {
+            cursorParent.actionLocked = false;
             this.gameObject.SetActive(false);
         }
     }
@@ -103,7 +103,7 @@ public class stageMenu : MonoBehaviour {
     public void optionSelected(string optionName) {
         switch (optionName) {
             case "Return":
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 this.gameObject.SetActive(false);
                 break;
             case "End Turn":
@@ -111,7 +111,7 @@ public class stageMenu : MonoBehaviour {
                 this.gameObject.SetActive(false);
                 break;
             case "Full Guide":
-                //cursorParent.movementLocked = false;
+                //cursorParent.actionLocked = false;
                 this.gameObject.SetActive(false);
                 gridMaster.menuTutorial.gameObject.SetActive(true);
                 gridMaster.menuTutorial.setValues(globals.allTutorials);
@@ -121,7 +121,7 @@ public class stageMenu : MonoBehaviour {
                 confirmPanel.Show(
                     "Restart this stage?", 
                     () => {  gridMaster.surrender(); },
-                    ()=> { cursorParent.movementLocked = false; }
+                    ()=> { cursorParent.actionLocked = false; }
                 );
                 break;
             case "Quit Game":
@@ -129,11 +129,11 @@ public class stageMenu : MonoBehaviour {
                 confirmPanel.Show(
                     "Quit Game?",
                     () => { gridMaster.quitGame(); },
-                    () => { cursorParent.movementLocked = false; }
+                    () => { cursorParent.actionLocked = false; }
                 );
                 break;
             default:
-                cursorParent.movementLocked = false;
+                cursorParent.actionLocked = false;
                 this.gameObject.SetActive(false);
                 break;
         }

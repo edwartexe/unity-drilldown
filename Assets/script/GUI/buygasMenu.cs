@@ -41,17 +41,17 @@ public class buygasMenu : MonoBehaviour{
         okbutton.interactable = (gridMaster.recursoDinero>=globals.gasCoinCost);
         gasIn.interactable = (gridMaster.recursoDinero >= globals.gasCoinCost);
         
-        if ((buyAmmount > 1) && (Input.GetKeyDown("down") || Input.GetKeyDown("s"))) {
+        if ((buyAmmount > 1) && controls.vertical < 0) {
             buttonDOWN();
         }
 
-        if ((buyAmmount < maxammount()) && (Input.GetKeyDown("up") || Input.GetKeyDown("w"))) {
+        if ((buyAmmount < maxammount()) && (controls.vertical > 0)) {
             buttonUP();
         }
-        if ((gridMaster.recursoDinero >= globals.gasCoinCost)  && Input.GetKeyDown("z")) {
+        if ((gridMaster.recursoDinero >= globals.gasCoinCost)  && Input.GetButtonDown("Fire1")) {
             doPurchase();
         }
-        if (Input.GetKeyDown("x")) {
+        if (Input.GetButtonDown("Fire2")) {
             cancelPurchase();
         }
     }
@@ -90,7 +90,7 @@ public class buygasMenu : MonoBehaviour{
     public void cancelPurchase() {
         //menuCreator.gameObject.SetActive(true);
         //menuCreator.menuactive = true;
-        gridMaster.selector.movementLocked = false;
+        gridMaster.selector.actionLocked = false;
         gridMaster.selector.creationMenuCancelCreation();
         this.gameObject.SetActive(false);
     }
@@ -99,7 +99,7 @@ public class buygasMenu : MonoBehaviour{
         gridMaster.addDinero(-buyAmmount * globals.gasCoinCost);
         gridMaster.addGas(buyAmmount);
 
-        gridMaster.selector.movementLocked = false;
+        gridMaster.selector.actionLocked = false;
         gridMaster.selector.creationMenuCancelCreation();
         this.gameObject.SetActive(false);
     }
