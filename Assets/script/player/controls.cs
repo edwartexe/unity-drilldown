@@ -11,47 +11,70 @@ public static class controls{
     public static float timestamp = 0F;
     public static int horizontal;
     public static int vertical;
-    
+
     public static void calculate() {
         horizontal = 0;     //Used to store the horizontal move direction.
         vertical = 0;       //Used to store the vertical move direction.
 
 
         //empanada
-#if !UNITY_EDITOR && UNITY_WEBGL
-        UnityEngine.WebGLInput.captureAllKeyboardInput = true; // or false
-#endif
-        //Check if we are running either in the Unity editor or in a standalone build.  
-#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        //UnityEngine.WebGLInput.captureAllKeyboardInput = true; // or false
 
+        //Check if we are running either in the Unity editor or in a standalone build.  
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_WEBGL
+
+        for (int i = 0; i < 20; i++) {
+            if (Input.GetKeyDown("joystick button " + i)) {
+                Debug.Log("joystick button " + i);
+
+            }
+        }
 
         //Get input from the input manager, round it to an integer and store it
-
-        if (Input.GetAxisRaw("Horizontal") != 0) {
+        //> 0.4f was originaly !=0 but it was too sensitive
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.4f || Mathf.Abs(Input.GetAxisRaw("HorizontalJ")) > 0.4f || Mathf.Abs(Input.GetAxisRaw("HorizontalD")) > 0.4f) {
             if (h_isAxisInUse == false || Time.time >= timestamp) {
-                horizontal = (int)(Input.GetAxisRaw("Horizontal"));
+                if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.4f) {
+                    horizontal = (int)(Input.GetAxisRaw("Horizontal"));
+                } else {
+                    if (Mathf.Abs(Input.GetAxisRaw("HorizontalJ")) > 0.4f) {
+                        horizontal = (int)(Input.GetAxisRaw("HorizontalJ"));
+                    } else {
+                        horizontal = (int)(Input.GetAxisRaw("HorizontalD"));
+                    }
+                }
                 h_isAxisInUse = true;
                 timestamp = Time.time + SpawnRate;
             }
         }
-        if (Input.GetAxisRaw("Horizontal") == 0) {
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("HorizontalJ") == 0 && Input.GetAxisRaw("HorizontalD") == 0) {
             h_isAxisInUse = false;
         }
 
-        if (Input.GetAxisRaw("Vertical") != 0) {
+        if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.4f || Mathf.Abs(Input.GetAxisRaw("VerticalJ")) > 0.4f || Mathf.Abs(Input.GetAxisRaw("VerticalD")) > 0.4f) {
             if (v_isAxisInUse == false || Time.time >= timestamp) {
-                vertical = (int)(Input.GetAxisRaw("Vertical"));
+                //vertical = (int)(Mathf.Max(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("VerticalJ")));
+                
+                if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.4f) {
+                    vertical = (int)(Input.GetAxisRaw("Vertical"));
+                } else {
+                    if (Mathf.Abs(Input.GetAxisRaw("VerticalJ")) > 0.4f) {
+                        vertical = (int)(Input.GetAxisRaw("VerticalJ"));
+                    } else {
+                        vertical = (int)(Input.GetAxisRaw("VerticalD"));
+                    }
+                }
                 v_isAxisInUse = true;
                 timestamp = Time.time + SpawnRate;
             }
         }
-        if (Input.GetAxisRaw("Vertical") == 0) {
+        if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("VerticalJ") == 0 && Input.GetAxisRaw("VerticalD") == 0) {
             v_isAxisInUse = false;
         }
         //Check if moving horizontally, if so set vertical to zero.
-        if (horizontal != 0) {
+        /*if (horizontal != 0) {
             vertical = 0;
-        }
+        }*/
 
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         //Check if Input has registered more than zero touches

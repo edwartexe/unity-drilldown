@@ -276,15 +276,25 @@ public class Grid : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate () {
-        updateAllNodes();
+        if (gamestate == 1) {
+            updateAllNodes();
+            guimanager.updateBase(turnCount, recursoDinero, recursoGas, relicsaved, relicounter);
+            guimanager.updateNode(selector.cursorNode);
+            if (!selector.cursorNode.nodeOculto && selector.cursorNode.isThereAUnitHere()) {
+                guimanager.updateUnit(selector.cursorNode.unitInThisNode);
+            } else {
+                if (!selector.cursorNode.nodeOculto && selector.cursorNode.isThereAnEnemyHere()) {
+                    guimanager.updateEnemy(selector.cursorNode.enemyInThisNode);
+                } else {
+                    guimanager.hideUnitPanel();
+                }
+            }
+        }
 
-        guimanager.updateBase(turnCount, recursoDinero, recursoGas, relicsaved, relicounter);
-        
         if (Input.GetKey("escape")) {
             Application.Quit();
         }
 
-        
         //DEBUG ONLY
         if (Input.GetKeyDown("2")) {
             foreach (Node n in grid) {
@@ -328,30 +338,6 @@ public class Grid : MonoBehaviour {
     public void quitGame() {
         Application.Quit();
     }
-
-    /*private void OnGUI() {
-        //GUI.Label(new Rect(10, 10, 300, 100), "turnCount: " +turnCount+"    Dinero: "+recursoDinero+"   Gas: "+recursoGas +" relics: "+relicsaved+"/"+relicounter);
-        if (gamestate == 2) {
-            GUI.TextArea(new Rect(50, 100, 250, 50), "GAME OVER");
-            if (GUI.Button(new Rect(70, 150, 210, 50), "restart")) {
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                reStart();
-            }
-        }
-        if (gamestate==3) {
-            GUI.TextArea(new Rect(50, 100, 250, 50), "YOU WIN");
-            if (GUI.Button(new Rect(70, 150, 210, 50), "nex stage")) {
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                mapIndex++;
-                if (mapIndex >= mapFile.Count) {
-                    //TODO END GAME
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                } else {
-                    reStart();
-                }
-            }
-        }
-    }*/
 
     public void addDinero(int val) {
         recursoDinero += val;

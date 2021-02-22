@@ -67,7 +67,24 @@ public class selector : MonoBehaviour {
         camScript = (camera)camera.GetComponent(typeof(camera));
         //camScript.alignCamera(cursorNode, false);
     }
-    
+
+    /*private void OnGUI() {
+        GUI.Label(new Rect(10, 310, 300, 20), "Horizontal: " + Input.GetAxisRaw("Horizontal"));
+        GUI.Label(new Rect(10, 330, 300, 20), "Vertical: " + Input.GetAxisRaw("Vertical"));
+        GUI.Label(new Rect(10, 350, 300, 20), "HorizontalJ: " + Input.GetAxisRaw("HorizontalJ"));
+        GUI.Label(new Rect(10, 370, 300, 20), "VerticalJ: " + Input.GetAxisRaw("VerticalJ"));
+        GUI.Label(new Rect(10, 390, 300, 20), "HorizontalD: " + Input.GetAxisRaw("HorizontalD"));
+        GUI.Label(new Rect(10, 410, 300, 20), "VerticalD: " + Input.GetAxisRaw("VerticalD"));
+
+
+        GUI.Label(new Rect(410, 310, 300, 20), "Horizontal: " + controls.horizontal);
+        GUI.Label(new Rect(410, 330, 300, 20), "Vertical: " + controls.vertical);
+        GUI.Label(new Rect(410, 350, 300, 20), "h: " + controls.h_isAxisInUse);
+        GUI.Label(new Rect(410, 370, 300, 20), "v: " + controls.v_isAxisInUse);
+        GUI.Label(new Rect(410, 390, 300, 20), "SpawnRate: " + controls.SpawnRate);
+        GUI.Label(new Rect(410, 410, 300, 20), "timestamp: " + controls.timestamp);
+    }*/
+
 
     bool nextDirection(int directionModifier) {
         //direccion de movimiento relativa al angulo de camara. basado en un modulo de las 4 direcciones + el indice de cada direccion
@@ -582,6 +599,7 @@ public class selector : MonoBehaviour {
                 }
                 //cancel
                 if (Input.GetButtonDown("Fire2")) {
+                    movementLocked = false;
                     battleMenuCancelAction();
                 }
                 break;
@@ -642,16 +660,11 @@ public class selector : MonoBehaviour {
             ) {
             gridMaster.updateAllNodes();
         }*/
-    }
-    
 
-
-
-    private void LateUpdate() {
-        updategui();
+        //updategui();
     }
 
-    public void updategui() {
+    /*public void updategui() {
         gridMaster.guimanager.updateNode(cursorNode);
         if (!cursorNode.nodeOculto && cursorNode.isThereAUnitHere()) { 
             gridMaster.guimanager.updateUnit(cursorNode.unitInThisNode); 
@@ -662,8 +675,7 @@ public class selector : MonoBehaviour {
                 gridMaster.guimanager.hideUnitPanel();
             }
         }
-       
-    }
+    }*/
 
     public void showStageMenu() {
         this.actionLocked = true;
@@ -754,8 +766,8 @@ public class selector : MonoBehaviour {
     }
 
     public void battleMenuCancelAction() {
-        this.actionLocked = true;
         this.state_selector = 2;
+        this.actionLocked = true;
         this.cursorNode = selectedUnit.nextNode;
         transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, 0);
         menuUnit.gameObject.SetActive(true);

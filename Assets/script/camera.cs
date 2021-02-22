@@ -44,11 +44,7 @@ public class camera : MonoBehaviour{
     }
 
 
-    // Update is called once per frame
-    void Update() {
-    }
-
-    /**/
+    // LateUpdate is called once per frame after all yields and animations have finished
     void LateUpdate() {
         bool thereWasChange = false;
         Vector3 v3 = Vector3.zero;
