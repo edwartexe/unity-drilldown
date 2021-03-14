@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class tutorialScreen : MonoBehaviour{
-
-    public Grid gridMaster;
-    public selector cursorParent;
-
     List<tutorial_item> items;
     int i;
 
@@ -16,12 +12,17 @@ public class tutorialScreen : MonoBehaviour{
     public Text textBox;
     public Text pageCount;
 
+    public delegate void TestDelegate(); // This defines what type of method you're going to call.
+    public TestDelegate methodAtClose; // This is the variable holding the method you're going to call.
+
     public void initialize() {
-        //gridMaster = (Grid)GameObject.Find("GameMaster").GetComponent(typeof(Grid));
-        cursorParent = gridMaster.selector;
-        //items = globals.tutorialItems;
         i = 0;
     }
+
+    // This method expects a TestDelegate variable, allowing us to pass a custom void method.
+    /*private void SimpleMethod(TestDelegate method) {
+        method();
+    }*/
 
     // Update is called once per frame
     void Update(){
@@ -35,8 +36,13 @@ public class tutorialScreen : MonoBehaviour{
         
     }
 
-    public void setValues(List<tutorial_item> _items) {
-        cursorParent.actionLocked = true;
+    public void setValues(List<tutorial_item> _items, TestDelegate method) {
+        //cursorParent.actionLocked = true;
+
+        // Fill Delegate.
+        // Call method, pass along delegate. Notice we don't use (); here. (that can be confusing)
+        methodAtClose = method;
+
         items = _items;
         i = 0;
         setScreen();
@@ -65,7 +71,8 @@ public class tutorialScreen : MonoBehaviour{
     }
 
     public void closeMenu() {
-        cursorParent.closeTutorial();
+        //SimpleMethod(m_methodToCall);
+        methodAtClose();
         this.gameObject.SetActive(false);
     }
 }

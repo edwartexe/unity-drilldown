@@ -222,27 +222,27 @@ public class Grid : MonoBehaviour {
                 case 1:
                     selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
-                    menuTutorial.setValues(globals.basicTutorials);
+                    menuTutorial.setValues(globals.basicTutorials, selector.closeTutorial);
                     break;
                 case 2:
                     selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
-                    menuTutorial.setValues(globals.tankTutorials);
+                    menuTutorial.setValues(globals.tankTutorials, selector.closeTutorial);
                     break;
                 case 3:
                     selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
-                    menuTutorial.setValues(globals.scoutTutorials);
+                    menuTutorial.setValues(globals.scoutTutorials, selector.closeTutorial);
                     break;
                 case 4:
                     selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
-                    menuTutorial.setValues(globals.bombTutorials);
+                    menuTutorial.setValues(globals.bombTutorials, selector.closeTutorial);
                     break;
                 case 5:
                     selector.actionLocked = true;
                     menuTutorial.gameObject.SetActive(true);
-                    menuTutorial.setValues(globals.moreEnemiesTutorial);
+                    menuTutorial.setValues(globals.moreEnemiesTutorial, selector.closeTutorial);
                     break;
             }
         }
@@ -326,7 +326,13 @@ public class Grid : MonoBehaviour {
         updateActors();
         gamestate = 0;
         if (nextStage) { mapIndex++; }
-        if (mapIndex < mapFile.Count) { initialize(); } else { quitGame(); }
+        if (mapIndex < mapFile.Count) {
+            Debug.Log("file "+ mapIndex + "/"+ mapFile.Count);
+            initialize(); 
+        } else {
+            //quitGame();
+            SceneManager.LoadScene("titleScreen");
+        }
         
     }
 

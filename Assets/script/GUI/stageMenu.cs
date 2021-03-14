@@ -47,10 +47,10 @@ public class stageMenu : MonoBehaviour {
         highlighter = Instantiate(highlighterPrefab, Vector3.zero, Quaternion.identity, content.transform);
         highlighter.name = "highlighter stage";
         highlighter.SetParent(content.transform);
-        highlighter.anchorMin = new Vector2(0, 1);
+        /*highlighter.anchorMin = new Vector2(0, 1);
         highlighter.anchorMax = new Vector2(0, 1);
         highlighter.pivot = new Vector2(0, 0);
-        highlighter.sizeDelta = new Vector2(400, 30);
+        highlighter.sizeDelta = new Vector2(400, 30);*/
         highlighter.localPosition = new Vector3(5, -33, 0);
         highlighter.localEulerAngles = new Vector3(0, 0, 0);
         highlighter.localScale = new Vector3(1, 1, 1);
@@ -70,6 +70,7 @@ public class stageMenu : MonoBehaviour {
             buttonArray.Add(button);
             maxOptions = iteration;
         }
+        content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, maxOptions * 30);
 
     }
 
@@ -114,7 +115,7 @@ public class stageMenu : MonoBehaviour {
                 //cursorParent.actionLocked = false;
                 this.gameObject.SetActive(false);
                 gridMaster.menuTutorial.gameObject.SetActive(true);
-                gridMaster.menuTutorial.setValues(globals.allTutorials);
+                gridMaster.menuTutorial.setValues(globals.allTutorials, cursorParent.closeTutorial);
                 break;
             case "Restart Stage":
                 this.gameObject.SetActive(false);
