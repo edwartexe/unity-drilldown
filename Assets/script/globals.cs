@@ -133,4 +133,33 @@ public static class globals {
     public static List<tutorial_item> scoutTutorials = new List<tutorial_item> {tutorial_scout1, tutorial_scout2 };
     public static List<tutorial_item> bombTutorials = new List<tutorial_item> { tutorial_bomb };
     public static List<tutorial_item> moreEnemiesTutorial = new List<tutorial_item> { tutorial_battle3, tutorial_battle4, tutorial_battle5 };
+
+
+    //stages
+    static TextAsset stage_basic = Resources.Load<TextAsset>("mapfiles/basic");
+    static TextAsset stage_bombLevel = Resources.Load<TextAsset>("mapfiles/bombLevel");
+    static TextAsset stage_circular = Resources.Load<TextAsset>("mapfiles/circular");
+    static TextAsset stage_centralmap = Resources.Load<TextAsset>("mapfiles/centralMap");
+    static TextAsset stage_lockAndKey = Resources.Load<TextAsset>("mapfiles/lockAndKey");
+    static TextAsset stage_topStart = Resources.Load<TextAsset>("mapfiles/topStart");
+    static TextAsset stage_topStartHoles = Resources.Load<TextAsset>("mapfiles/topStartHoles");
+    static TextAsset stage_Tutorial = Resources.Load<TextAsset>("mapfiles/Tutorial");
+    public static List<TextAsset> aviableMaps = new List<TextAsset> {
+        stage_basic,
+        stage_bombLevel,
+        stage_circular,
+        stage_centralmap,
+        stage_lockAndKey,
+        stage_topStart,
+        stage_topStartHoles,
+        stage_Tutorial
+    };
+    public static List<TextAsset> mapFiles = new List<TextAsset> {
+        stage_basic,
+        stage_bombLevel,
+        stage_circular,
+        stage_centralmap,
+        stage_lockAndKey,
+        stage_topStartHoles
+    };
 }

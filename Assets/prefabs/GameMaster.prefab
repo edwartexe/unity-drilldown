@@ -169,11 +169,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapFile:
-  - {fileID: 4900000, guid: 03b5d091cc33e284eabca79e87d1742b, type: 3}
-  - {fileID: 4900000, guid: 5d3d92601eaf9134992a6832527d5a58, type: 3}
-  - {fileID: 4900000, guid: 94f229901f157ee49bdec582c5b85d88, type: 3}
-  - {fileID: 4900000, guid: 2510fee7753b40b4bac229fda0d9bf6e, type: 3}
-  - {fileID: 4900000, guid: ef7137bd4b29eb04db51a773fd07e207, type: 3}
+  - {fileID: 4900000, guid: 63ed129a98319b448a88fbb06d5dd647, type: 3}
+  - {fileID: 4900000, guid: fdd48371ccb1d214a83196e8092b377a, type: 3}
+  - {fileID: 4900000, guid: b5e1974af0c392a46898b88da804d21e, type: 3}
+  - {fileID: 4900000, guid: 95fcff252576d134784f3046ea3d63c8, type: 3}
+  - {fileID: 4900000, guid: 4e91885b1bae204489d6a5c5bba6e355, type: 3}
+  - {fileID: 4900000, guid: e029351a54fd45f4f81a3d757b013067, type: 3}
   mapIndex: 0
   stageResult: {fileID: 0}
   menuTutorial: {fileID: 0}
@@ -247,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5095686350628159636
 Transform:
   m_ObjectHideFlags: 0

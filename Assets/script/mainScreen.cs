@@ -8,14 +8,14 @@ using UnityEngine.SceneManagement;
 public class mainScreen : MonoBehaviour {
     public tutorialScreen menuTutorial;
     public GameObject stageSelect;
-
-
     public RectTransform scrollContent;
     public RectTransform highlighterPrefab;
     RectTransform highlighter;
     List<GameObject> buttonArray;
     public int selectedOption;
     int maxOptions;
+
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -44,15 +44,18 @@ public class mainScreen : MonoBehaviour {
         //highlighter.localScale = Vector3.one;
         int iteration = 0;
 
-        DirectoryInfo info = new DirectoryInfo(Application.streamingAssetsPath + "/mapfiles");
-        FileInfo[] mapList = info.GetFiles();
-        foreach (FileInfo file in mapList) {
+        //DirectoryInfo info = new DirectoryInfo(Application.streamingAssetsPath + "/mapfiles");
+        //FileInfo[] mapList = info.GetFiles();
+
+        List<TextAsset> mapList = globals.aviableMaps;
+        foreach (TextAsset file in mapList) {
             //Debug.Log(file.Name);
 
             GameObject gogo = Resources.Load("UIbutton_OPs") as GameObject;
             GameObject button = Instantiate(gogo, Vector3.zero, Quaternion.identity) as GameObject;
-            //button.GetComponent<Button>().onClick.AddListener(delegate { optionSelected(option); });
-            button.gameObject.GetComponentInChildren<Text>().text = file.Name;
+            button.GetComponent<Button>().onClick.AddListener(delegate { stageOptionClick(file); });
+            //button.gameObject.GetComponentInChildren<Text>().text = file.Name;
+            button.gameObject.GetComponentInChildren<Text>().text = file.name;
             RectTransform rectTransform = button.GetComponent<RectTransform>();
             rectTransform.SetParent(scrollContent.transform);
             rectTransform.localPosition = new Vector3(5, -33 - (iteration * 30), 0);
@@ -69,8 +72,15 @@ public class mainScreen : MonoBehaviour {
             maxOptions = iteration;
         }
         scrollContent.sizeDelta = new Vector2(0, maxOptions*30);
-
     }
+
+
+    void stageOptionClick(TextAsset optionSelected) {
+        globals.mapFiles = new List<TextAsset> { optionSelected };
+        startGame();
+    }
+
+
 
     // Update is called once per frame
     void Update() {

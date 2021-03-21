@@ -23,8 +23,12 @@ public class GUImanager : MonoBehaviour{
 
     private Sprite[] allsprites;
 
+
+    public Text enemyTurnText;
+
     private void Start() {
         allsprites = Resources.LoadAll<Sprite>("mine_sprites_all");
+        enemyTurnText.gameObject.SetActive(false);
     }
 
     public void updateNode(Node _node) {

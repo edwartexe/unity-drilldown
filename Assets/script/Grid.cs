@@ -66,6 +66,8 @@ public class Grid : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        mapFile = globals.mapFiles;
+
         initialize();
     }
 
@@ -405,6 +407,7 @@ public class Grid : MonoBehaviour {
 
         if (gamestate == 1) {
             playersturn = false;
+            guimanager.enemyTurnText.gameObject.SetActive(true);
             selector.actionLocked = true;
             foreach (GameObject unit in units) {
                 unit_parent unitscript = unit.GetComponent<unit_parent>();
@@ -444,6 +447,7 @@ public class Grid : MonoBehaviour {
             selector.actionLocked = false;
             yield return null;
             playersturn = true;
+            guimanager.enemyTurnText.gameObject.SetActive(false);
             turnCount++;
         }
 
