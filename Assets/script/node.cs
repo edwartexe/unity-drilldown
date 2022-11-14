@@ -9,6 +9,7 @@ public class Node{
     public bool nodeOculto;
     public bool walkable;
     public bool pathmember = false;
+    public bool hasSomething = false;
 
     public Node leftNode;
 	public Node rightNode;
@@ -90,8 +91,13 @@ public class Node{
         //renderTile.sprite = tyleIconsAtlas.Single(s => s.name == "emerald_tyleset_102");
         
         if (nodeOculto) {
-            renderTile.sprite = tyleIconsAtlas[102];
-            shownTileType = "Unrevealed";
+            if (hasSomething) {
+                renderTile.sprite = tyleIconsAtlas[142];
+                shownTileType = "Unrevealed?";
+            } else {
+                renderTile.sprite = tyleIconsAtlas[102];
+                shownTileType = "Unrevealed";
+            }
         } else if (tiletype.Contains("bloqueado")) {
             renderTile.sprite = tyleIconsAtlas[111];
             shownTileType = "Blocked";
@@ -125,8 +131,13 @@ public class Node{
             SpriteRenderer renderTile = nodeTile.GetComponent<SpriteRenderer>();
             Sprite[] tyleIconsAtlas = Resources.LoadAll<Sprite>("emerald_tyleset");
             if (nodeOculto) {
-                renderTile.sprite = tyleIconsAtlas[102];
-                shownTileType = "Unrevealed";
+                if (hasSomething) {
+                    renderTile.sprite = tyleIconsAtlas[142];
+                    shownTileType = "Unrevealed?";
+                } else {
+                    renderTile.sprite = tyleIconsAtlas[102];
+                    shownTileType = "Unrevealed";
+                }
             } else if (tiletype.Contains("bloqueado")) {
                 renderTile.sprite = tyleIconsAtlas[111];
                 shownTileType = "Blocked";
@@ -157,6 +168,7 @@ public class Node{
 
     public void revealNode() {
         this.nodeOculto = false;
+        this.hasSomething = false;
         if (isThereAnItemHere()) {
             if (isThereAnEnemyHere() && enemyInThisNode.heldRelic!=null && enemyInThisNode.heldRelic.Equals(itemInThisNode) ) {
                 itemInThisNode.onTake(true);
@@ -181,6 +193,38 @@ public class Node{
         updateSprite();
     }
 
+    public void markInterest() {
+        if (hasSomething) {
+            return;
+        }
+        this.hasSomething = true;
+
+        List<Node> visited = new List<Node>();
+        List<Node> visiting = new List<Node>();
+        visiting.Add(this);
+        for (int i = 0; i <= 2; i++) {
+            List<Node> unvisited = new List<Node>();
+
+            foreach (Node newNode in visiting) {
+                if (!visited.Contains(newNode.upNode) && newNode.upNode != null) { unvisited.Add(newNode.upNode); }
+                if (!visited.Contains(newNode.rightNode) && newNode.rightNode != null) { unvisited.Add(newNode.rightNode); }
+                if (!visited.Contains(newNode.downNode) && newNode.downNode != null) { unvisited.Add(newNode.downNode); }
+                if (!visited.Contains(newNode.leftNode) && newNode.leftNode != null) { unvisited.Add(newNode.leftNode); }
+
+                if (newNode.nodeOculto) {
+                    float rng = Random.Range(0f, 10f);
+                    if (rng > 5f) {
+                        newNode.hasSomething = true;
+                        newNode.updateSprite();
+                    }
+                }
+
+                visited.Add(newNode);
+            }
+            visiting = unvisited;
+        }
+        updateSprite();
+    }
 
     public bool isThereAUnitHere(){
 		bool result=false;
@@ -247,6 +291,21 @@ public class Node{
             !tiletype.Contains("sphinxstatue") &&
             walkable &&
             !nodeOculto
+        );
+    }
+
+    public bool canUnitDig()
+    {
+        return (
+            nodeOculto
+            ||
+            (
+            !nodeOculto &&
+            !tiletype.Contains("bloqueado") &&
+            !tiletype.Contains("locked") &&
+            !tiletype.Contains("sphinxstatue") &&
+            !isThereAnEnemyHere()
+            )
         );
     }
 

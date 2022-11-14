@@ -39,6 +39,7 @@ public class Grid : MonoBehaviour {
     public unit_parent unit_scout_prefab;
     public unit_parent unit_bomb_prefab;
     public unit_parent unit_armoredS_prefab;
+    public unit_parent unit_superDrill_prefab;
 
     public enemy_parent enemy_worm_prefab;
     public enemy_shark enemy_shark_prefab;
@@ -176,6 +177,9 @@ public class Grid : MonoBehaviour {
             if (lines[2].Contains("sphinxawake")) {
                 enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
             }
+            if (lines[2].Contains("Mole")) {
+                enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
+            }
 
             if (lines[2].Contains("START")) {
                 unit_HQ newHQ = Instantiate(unit_HQ_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupUnit);
@@ -193,6 +197,12 @@ public class Grid : MonoBehaviour {
             }
             if (lines[2].Contains("BOMB")) {
                 unit_parent startUnit = Instantiate(unit_bomb_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupUnit);
+            }
+            if (lines[2].Contains("ARMORED_SC")) {
+                unit_parent startUnit = Instantiate(unit_armoredS_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupUnit);
+            }
+            if (lines[2].Contains("SUPER_DRLL")) {
+                unit_parent startUnit = Instantiate(unit_superDrill_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupUnit);
             }
 
         }

@@ -42,7 +42,8 @@ public class creatorMenu : MonoBehaviour{
         allOptions.Add(new battleOption(1, "New Tank", globals.tank_create_cost));
         allOptions.Add(new battleOption(2, "New Scout", globals.scout_create_cost));
         allOptions.Add(new battleOption(4, "New Bomb", globals.bomb_create_cost));
-        if (gridMaster.relicsaved>=1) { allOptions.Add(new battleOption(5, "New Armored Scout", globals.tank_create_cost));  } 
+        if (gridMaster.relicsaved>=1) { allOptions.Add(new battleOption(5, "New Armored Scout", globals.tank_create_cost)); }
+        if (gridMaster.relicsaved >= 1) { allOptions.Add(new battleOption(6, "New Super Drill", globals.superDrill_create_cost)); }
         //allOptions.Add(new battleOption(3, "Buy Gas", globals.gasCoinCost));
         allOptions.Add(new battleOption(10, "Cancel", 0));
 
@@ -180,6 +181,19 @@ public class creatorMenu : MonoBehaviour{
                     cursorParent.state_selector = 7;
                     this.gameObject.SetActive(false);
                 } else {
+                    //play error sound
+                }
+                break;
+            case 6: //super drill
+                if (unitHQ_code.checkCreationSpaces(null, false) && (gridMaster.recursoDinero >= globals.superDrill_create_cost))
+                {
+                    cursorParent.create_selector = 6;
+                    cursorParent.actionLocked = false;
+                    cursorParent.state_selector = 7;
+                    this.gameObject.SetActive(false);
+                }
+                else
+                {
                     //play error sound
                 }
                 break;

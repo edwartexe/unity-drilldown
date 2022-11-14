@@ -239,11 +239,14 @@ public class selector : MonoBehaviour {
                 //drill
                 if (Input.GetButtonDown("Fire1")) {
                     if ((selectedUnit != null) && (selectedUnit.selected)) {
-                        if (selectedUnit.checkDrillTargets(this.cursorNode, true) && this.cursorNode.nodeOculto) {
-                            this.cursorNode.revealNode();
-                            GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps"));//, cursorNode.gridPoint, Quaternion.identity, gridMaster.groupUnit
-                            dust.transform.position = new Vector3(cursorNode.gridPoint.x, cursorNode.gridPoint.y, -1);
-                            Destroy(dust, 1.0f);
+                        if (selectedUnit.checkDrillTargets(this.cursorNode, true)) {
+                            //drill action
+                            //djkstra between unit and target. range should be a straight line so there's no problem with path
+                            List<Node> drillpath = pathToAlert(selectedUnit.nextNode, cursorNode, 99, false);
+                            foreach (Node pathmember in drillpath) {
+                                performDrilling(pathmember);
+                            }
+
                             //disengage code
                             selectedUnit.lastNode = selectedUnit.thisNode;
                             selectedUnit.thisNode = selectedUnit.nextNode;
@@ -383,6 +386,10 @@ public class selector : MonoBehaviour {
                             case 5:
                                 createcost = globals.tank_create_cost;
                                 selected_creation_unit = gridMaster.unit_armoredS_prefab;
+                                break;
+                            case 6:
+                                createcost = globals.superDrill_create_cost;
+                                selected_creation_unit = gridMaster.unit_superDrill_prefab;
                                 break;
                         }
 
@@ -569,6 +576,7 @@ public class selector : MonoBehaviour {
                             }
                             if (nnn.isThereAnItemHere() && !nnn.isHQhere() && (!nnn.isThereAUnitHere() || (nnn.isThereAUnitHere() && nnn.itemInThisNode.state!=2 )) ) {
                                 relicScan++;
+                                nnn.markInterest();
                             }
                         }
 
@@ -676,6 +684,16 @@ public class selector : MonoBehaviour {
             }
         }
     }*/
+
+    public void performDrilling(Node targetNode) {
+        //drill action
+        if (targetNode.nodeOculto) {
+            targetNode.revealNode();
+            GameObject dust = Instantiate((GameObject)Resources.Load("dust_ps"));
+            dust.transform.position = new Vector3(targetNode.gridPoint.x, targetNode.gridPoint.y, -1);
+            Destroy(dust, 1.0f);
+        }
+    }
 
     public void showStageMenu() {
         this.actionLocked = true;
@@ -852,7 +870,7 @@ public class selector : MonoBehaviour {
 
     //----------------------------------------------------- PATH FINDING -----------------------------------------------------------
     //buscar un camino de nodos desde el nodo actual a donde esta el jugador -------------------------------------------------------
-    public virtual List<Node> pathToAlert(Node targetNode, Node startNode, int limit) {
+    public virtual List<Node> pathToAlert(Node targetNode, Node startNode, int limit, bool friendlyNodes = true) {
 
         List<DjikstraNodes> unvisited = new List<DjikstraNodes>();
         Stack<Node> path = new Stack<Node>();
@@ -911,18 +929,27 @@ public class selector : MonoBehaviour {
                 foreach (Node compareThis in searcher.node.getVecinos()) {
                     if (compareThis != null) {
                         int temp = unvisited.FindIndex(x => x.node.Equals(compareThis));
-                        if ((!unvisited[temp].node.tiletype.Contains("bloqueado") 
-                        && !unvisited[temp].node.tiletype.Contains("GuardOnly")
-                        && !unvisited[temp].node.tiletype.Contains("locked")
-                        && !unvisited[temp].node.tiletype.Contains("sphinxstatue")
-                        && !unvisited[temp].node.tiletype.Contains("nest") 
-                        && !unvisited[temp].node.tiletype.Contains("bottomless"))
-                        && (unvisited[temp].node.walkable)
-                        && (!unvisited[temp].node.nodeOculto)
-                        && (searcher.weight + 1 < unvisited[temp].weight)
-                        && !unvisited[temp].node.isThereAnEnemyHere()) {
-                            unvisited[temp].weight = searcher.weight + 1;
-                            unvisited[temp].prevNode = searcher;
+                        if (friendlyNodes)  {
+                            //the valid nodes that are allowed for the path are unit-friendly nodes. default true
+                            if ((!unvisited[temp].node.tiletype.Contains("bloqueado") 
+                            && !unvisited[temp].node.tiletype.Contains("GuardOnly")
+                            && !unvisited[temp].node.tiletype.Contains("locked")
+                            && !unvisited[temp].node.tiletype.Contains("sphinxstatue")
+                            && !unvisited[temp].node.tiletype.Contains("nest") 
+                            && !unvisited[temp].node.tiletype.Contains("bottomless"))
+                            && (unvisited[temp].node.walkable)
+                            && (!unvisited[temp].node.nodeOculto)
+                            && (searcher.weight + 1 < unvisited[temp].weight)
+                            && !unvisited[temp].node.isThereAnEnemyHere()) {
+                                unvisited[temp].weight = searcher.weight + 1;
+                                unvisited[temp].prevNode = searcher;
+                            }
+                        } else {
+                            //or if we need something more generic set the parameter to false
+                            if ( searcher.weight + 1 < unvisited[temp].weight) {
+                                unvisited[temp].weight = searcher.weight + 1;
+                                unvisited[temp].prevNode = searcher;
+                            }
                         }
                     }
                 }

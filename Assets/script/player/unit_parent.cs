@@ -245,7 +245,7 @@ public class unit_parent : MonoBehaviour{
         return false;
     }
 
-    public List<Node> listAttackNodes() {
+    public virtual List<Node> listAttackNodes() {
 
         List<Node> targetsvisited = new List<Node>();
         List<Node> targetsvisiting = new List<Node>();
@@ -400,7 +400,7 @@ public class unit_parent : MonoBehaviour{
     public virtual List<Node> getScanTargets2() {
         int startX = (int)this.nextNode.gridPoint.x;
         int startY = (int)this.nextNode.gridPoint.y;
-        int maxDepth, baseValue, baseDepth, depthDirection;
+        int maxDepth, baseValue, baseDepth, depthDirection, gridSizeWidth;
         bool isHorizontal=true;
         switch (scanDirection) {
             case 0: //left
@@ -409,12 +409,14 @@ public class unit_parent : MonoBehaviour{
                 baseValue = startY;
                 isHorizontal = false;
                 depthDirection = -1;
+                gridSizeWidth = gridMaster.gridSizeZ;
                 break;
             case 1: //down
                 maxDepth = Mathf.Clamp(startY - globals.scout_scan_range, 0, gridMaster.gridSizeZ -1);
                 baseDepth = startY;
                 baseValue = startX;
                 depthDirection = -1;
+                gridSizeWidth = gridMaster.gridSizeX;
                 break;
             case 2: //right
                 maxDepth = Mathf.Clamp(startX + globals.scout_scan_range, 0, gridMaster.gridSizeX -1 );
@@ -422,21 +424,25 @@ public class unit_parent : MonoBehaviour{
                 baseValue = startY;
                 isHorizontal = false;
                 depthDirection = 1;
+                gridSizeWidth = gridMaster.gridSizeZ;
                 break;
             case 3: //up
                 maxDepth = Mathf.Clamp(startY + globals.scout_scan_range, 0, gridMaster.gridSizeZ-1 );
                 baseDepth = startY;
                 baseValue = startX;
                 depthDirection = 1;
+                gridSizeWidth = gridMaster.gridSizeX;
                 break;
             default: //nothing
                 maxDepth = startY;
                 baseDepth = startY;
                 baseValue = startX;
                 depthDirection = 1;
+                gridSizeWidth = gridMaster.gridSizeX;
                 break;
         }
 
+        Debug.Log("=============================================== ");
         Debug.Log("maxDepth "+maxDepth);
         Debug.Log("baseDepth " + baseDepth);
         List<Node> scanTargets = new List<Node>();
@@ -445,14 +451,18 @@ public class unit_parent : MonoBehaviour{
         while (keepGoing) {
             Debug.Log("depth " + depth);
             Debug.Log("real depth " + (baseDepth + depth * depthDirection));
-            int startWidth = Mathf.Clamp(baseValue - depth, 0, gridMaster.gridSizeX - 1);
-            int endWidth = Mathf.Clamp(baseValue + depth, 0, gridMaster.gridSizeZ - 1);
+            int startWidth = Mathf.Clamp(baseValue - depth, 0, gridSizeWidth - 1);
+            Debug.Log("startWidth " + startWidth);
+            int endWidth = Mathf.Clamp(baseValue + depth, 0, gridSizeWidth - 1);
+            Debug.Log("endWidth " + endWidth);
             for (int j = startWidth; j <= endWidth; j++) {
                 if (isHorizontal) {
+                    Debug.Log("horizontal[ " + j + ","+ (baseDepth + (depth * depthDirection))+"]");
                     if (gridMaster.grid[j, baseDepth + (depth * depthDirection)] != null) {
                         scanTargets.Add(gridMaster.grid[j, baseDepth + (depth * depthDirection)]);
                     }
                 } else {
+                    Debug.Log("vertical[ " + (baseDepth + (depth * depthDirection)) + "," + j + "]");
                     if (gridMaster.grid[baseDepth + (depth * depthDirection), j] != null) {
                         scanTargets.Add(gridMaster.grid[baseDepth + (depth * depthDirection), j]);
                     }

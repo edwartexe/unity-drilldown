@@ -898,6 +898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
         type: 3}
+      propertyPath: mapFile.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
       propertyPath: stageResult
       value: 
       objectReference: {fileID: 1502289744026260981}
@@ -911,6 +916,28 @@ PrefabInstance:
       propertyPath: guimanager
       value: 
       objectReference: {fileID: 323004059}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: mapFile.Array.data[6]
+      value: 
+      objectReference: {fileID: 4900000, guid: 14751113763ef0149a55c2720e3ff31a, type: 3}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: mapIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: unit_superDrill_prefab
+      value: 
+      objectReference: {fileID: -4594319985706672792, guid: 8225d472295c97a4d915adf993037e62,
+        type: 3}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: unit_master_prefab
+      value: 
+      objectReference: {fileID: 5458574792842053479, guid: 41118815e27796f4fbfbdd97913caa90,
+        type: 3}
     - target: {fileID: 5095686350413751702, guid: 76625ec66c82a144ea7d54cce17d20e4,
         type: 3}
       propertyPath: m_Name

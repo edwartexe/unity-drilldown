@@ -54,19 +54,19 @@ public class unit_drill : unit_parent {
             animateDrill    (selected && ( selector.state_selector == 3 || selector.state_selector == 4) );
     }
 
-    
+
 
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------------move range ------------------------------------------------------------------------------------------
 
-    public override bool checkHoldTargets(Node targetNode, bool compareNode) {
+    /*public override bool checkHoldTargets(Node targetNode, bool compareNode) {
         return false;
     }
 
     public override bool checkDropTargets(Node targetNode, bool compareNode) {
         return false;
-    }
+    }*/
 
     public override bool checkBombTargets(Node targetNode, bool compareNode) {
         return false;

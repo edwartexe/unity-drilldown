@@ -74,13 +74,14 @@ public class unit_bomb : unit_parent{
         return false;
     }
 
-    public override bool checkHoldTargets(Node targetNode, bool compareNode) {
+    /*public override bool checkHoldTargets(Node targetNode, bool compareNode) {
         return false;
     }
 
     public override bool checkDropTargets(Node targetNode, bool compareNode) {
         return false;
-    }
+    }*/
+
     public override bool checkScanTargets(Node searcher, bool compareNode) {
         return false;
     }

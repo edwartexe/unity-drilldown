@@ -9,24 +9,28 @@ public static class globals {
     public const int action_cost_base_scout = 1;//1
     public const int action_cost_base_bomb = 2;//5
     public const int action_cost_base_armoredscout = 2;
+    public const int action_cost_base_superDrill = 5;//5
 
     public const string drillname = "Drill";
     public const string tankname = "Tank";
     public const string scoutname = "Scout";
     public const string bombname = "Demolition";
     public const string armoredScoutname = "Amored Scout";
+    public const string superDrillname = "Super Drill";
 
     public const int drillhealth = 30;
     public const int tankhealth  = 50;
     public const int scouthealth = 25;
     public const int bombhealth = 25;
-    public const int armoredScouthealth= 50;
+    public const int armoredScouthealth= 45;
+    public const int superDrillhealth = 50;
 
     public const int drill_create_cost = 15;
     public const int tank_create_cost = 25;
     public const int scout_create_cost = 20;
     public const int bomb_create_cost = 25;
     public const int armoredScout_create_cost = 30;
+    public const int superDrill_create_cost = 35;
 
     public const  int action_cost_tile_move = 0;//1
     public const  int action_cost_drill = 0;//1
@@ -41,6 +45,7 @@ public static class globals {
     public const int bombExplodeStat = 50;
     public const int armoredScout_attackstat = 15;
     public const int scout_scan_range = 2;
+    public const int superDrillattackstat = 20;
 
     public const int gasCoinCost = 2;
     public const int coinRedAlert = 30;
@@ -160,6 +165,7 @@ public static class globals {
         stage_circular,
         stage_centralmap,
         stage_lockAndKey,
-        stage_topStartHoles
+        stage_topStartHoles,
+        stage_Tutorial
     };
 }
