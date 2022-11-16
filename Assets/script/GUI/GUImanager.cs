@@ -63,12 +63,14 @@ public class GUImanager : MonoBehaviour{
         displayExtra.text = "Cost: " + _unit.basecost +" Atk: "+_unit.attackPower;
         switch (_unit.unitClass) {
             case globals.drillname:
+            case globals.superDrillname:
                 imageUnit.sprite = allsprites[8];
                 break;
             case globals.tankname:
                 imageUnit.sprite = allsprites[9];
                 break;
             case globals.scoutname:
+            case globals.armoredScoutname:
                 imageUnit.sprite = allsprites[10];
                 break;
             case globals.bombname:
@@ -104,6 +106,12 @@ public class GUImanager : MonoBehaviour{
                 break;
             case globals.unlockerName:
                 imageUnit.sprite = allsprites[5];
+                break;
+            case globals.guardianName:
+                imageUnit.sprite = allsprites[11]; //ToDo
+                break;
+            case globals.moleName:
+                imageUnit.sprite = allsprites[4]; //ToDo
                 break;
         }
     }

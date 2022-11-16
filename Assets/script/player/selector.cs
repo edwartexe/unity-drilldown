@@ -935,6 +935,7 @@ public class selector : MonoBehaviour {
                             && !unvisited[temp].node.tiletype.Contains("GuardOnly")
                             && !unvisited[temp].node.tiletype.Contains("locked")
                             && !unvisited[temp].node.tiletype.Contains("sphinxstatue")
+                            && !unvisited[temp].node.tiletype.Contains("Guardian")
                             && !unvisited[temp].node.tiletype.Contains("nest") 
                             && !unvisited[temp].node.tiletype.Contains("bottomless"))
                             && (unvisited[temp].node.walkable)

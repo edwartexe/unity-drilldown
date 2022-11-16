@@ -47,6 +47,8 @@ public class Grid : MonoBehaviour {
     public enemy_thief_nest enemy_nest_prefab;
     public enemy_unlocker enemy_unlocker_prefab;
     public enemy_sphinx enemy_sphinx_prefab;
+    public enemy_guardian enemy_guardian_prefab;
+    public enemy_mole enemy_mole_prefab;
 
     public relic relic_prefab;
     public bool playersturn;
@@ -177,8 +179,11 @@ public class Grid : MonoBehaviour {
             if (lines[2].Contains("sphinxawake")) {
                 enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
             }
+            if (lines[2].Contains("GuardianAwake")) {
+                enemy_guardian newboss = Instantiate(enemy_guardian_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
+            }
             if (lines[2].Contains("Mole")) {
-                enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
+                enemy_mole newboss = Instantiate(enemy_mole_prefab, new Vector3(gridPoint.x, gridPoint.y, 0), Quaternion.identity, groupEnemy);
             }
 
             if (lines[2].Contains("START")) {
@@ -392,23 +397,44 @@ public class Grid : MonoBehaviour {
     public void wakeUpStatues() {
         int relCount = 0;
         foreach (relic rel in relics) {
-            if (rel.state == 3) {
+            if (rel.state == 2 || rel.state == 3) { //taken || saved
                 relCount++;
             }
         }
 
-        if (gamestate == 1 && relCount == relicounter - 1) {
-            //wake up boss
-            Debug.Log("you gonna need a bigger drill");
-            foreach (Node n in grid) {
-                if (n.tiletype.Contains("sphinxstatue")) {
-                    n.tiletype = n.tiletype.Replace("sphinxstatue", "normal");
-                    enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(n.gridPoint.x, n.gridPoint.y, 0), Quaternion.identity, groupEnemy);
+        if (gamestate == 1)  {
+
+            //wake up mini boss
+            Debug.Log("relcount at "+ relCount+" out of "+ relicounter);
+            foreach (Node n in grid)
+            {
+                if (n.tiletype.Contains("Guardian"+relCount))
+                {
+                    n.tiletype = n.tiletype.Replace("Guardian" + relCount, "normal");
+                    enemy_guardian newminiboss = Instantiate(enemy_guardian_prefab, new Vector3(n.gridPoint.x, n.gridPoint.y, 0), Quaternion.identity, groupEnemy);
                     n.revealNode();
+                }
+            }
+
+            if (relCount == relicounter)
+            {
+                //wake up boss
+                Debug.Log("you gonna need a bigger drill");
+                foreach (Node n in grid)
+                {
+                    if (n.tiletype.Contains("sphinxstatue"))
+                    {
+                        n.tiletype = n.tiletype.Replace("sphinxstatue", "normal");
+                        enemy_sphinx newboss = Instantiate(enemy_sphinx_prefab, new Vector3(n.gridPoint.x, n.gridPoint.y, 0), Quaternion.identity, groupEnemy);
+                        n.revealNode();
+                    }
                 }
             }
             updateActors();
         }
+
+
+
 
     }
 

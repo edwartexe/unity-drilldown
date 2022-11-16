@@ -110,6 +110,9 @@ public class Node{
         } else if (tiletype.Contains("sphinxstatue")) {
             renderTile.sprite = tyleIconsAtlas[125];
             shownTileType = "Sphinx Statue";
+        }  else if (tiletype.Contains("Guardian")) {
+            renderTile.sprite = tyleIconsAtlas[125];
+            shownTileType = "Guard Statue";
         } else if (tiletype.Contains("nest")) {
             renderTile.sprite = tyleIconsAtlas[1];
             shownTileType = "Enemy Nest";
@@ -150,6 +153,9 @@ public class Node{
             } else if (tiletype.Contains("sphinxstatue")) {
                 renderTile.sprite = tyleIconsAtlas[125];
                 shownTileType = "Sphinx Statue";
+            } else if (tiletype.Contains("Guardian"))  {
+                renderTile.sprite = tyleIconsAtlas[125];
+                shownTileType = "Guard Statue";
             } else if (tiletype.Contains("nest")) {
                 renderTile.sprite = tyleIconsAtlas[1];
                 shownTileType = "Enemy Nest";
@@ -166,7 +172,7 @@ public class Node{
         }
     }
 
-    public void revealNode() {
+    public void revealNode(bool skipGain = false) {
         this.nodeOculto = false;
         this.hasSomething = false;
         if (isThereAnItemHere()) {
@@ -177,10 +183,12 @@ public class Node{
             }
         }
         //gridMaster.addGas(globals.node_reveal_gas);
-        if (tiletype.Contains("bloqueado") || tiletype.Contains("locked") || tiletype.Contains("GuardOnly") || tiletype.Contains("sphinxstatue")) {
-            gridMaster.addDinero(globals.node_blocked_coin);
-        } else {
-            gridMaster.addDinero(globals.node_reveal_coin);
+        if (!skipGain) {
+            if (tiletype.Contains("bloqueado") || tiletype.Contains("locked") || tiletype.Contains("GuardOnly") || tiletype.Contains("sphinxstatue") || tiletype.Contains("Guardian")) {
+                gridMaster.addDinero(globals.node_blocked_coin);
+            } else {
+                gridMaster.addDinero(globals.node_reveal_coin);
+            }
         }
         updateSprite();
     }
@@ -277,6 +285,7 @@ public class Node{
             !tiletype.Contains("locked") &&
             !tiletype.Contains("bottomless") &&
             !tiletype.Contains("sphinxstatue") &&
+            !tiletype.Contains("Guardian") &&
             walkable &&
             !nodeOculto &&
             !isThereAnEnemyHere()
@@ -289,6 +298,7 @@ public class Node{
             !tiletype.Contains("locked") &&
             !tiletype.Contains("bottomless") &&
             !tiletype.Contains("sphinxstatue") &&
+            !tiletype.Contains("Guardian") &&
             walkable &&
             !nodeOculto
         );
@@ -304,6 +314,7 @@ public class Node{
             !tiletype.Contains("bloqueado") &&
             !tiletype.Contains("locked") &&
             !tiletype.Contains("sphinxstatue") &&
+            !tiletype.Contains("Guardian") &&
             !isThereAnEnemyHere()
             )
         );
@@ -314,6 +325,7 @@ public class Node{
         !tiletype.Contains("bloqueado") && 
         !tiletype.Contains("bottomless") && 
         !tiletype.Contains("sphinxstatue") &&
+        !tiletype.Contains("Guardian") &&
         walkable && 
         !nodeOculto
         );
@@ -324,6 +336,7 @@ public class Node{
         !tiletype.Contains("bloqueado") 
         && !tiletype.Contains("bottomless")
         && !tiletype.Contains("sphinxstatue")
+        && !tiletype.Contains("Guardian")
         && walkable
         );
     }
@@ -332,6 +345,8 @@ public class Node{
         return (
         !tiletype.Contains("bloqueado")
         && !tiletype.Contains("bottomless")
+        && !tiletype.Contains("Guardian")
+        && !tiletype.Contains("sphinxstatue")
         && walkable
         );
     }

@@ -938,6 +938,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5458574792842053479, guid: 41118815e27796f4fbfbdd97913caa90,
         type: 3}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: mapFile.Array.data[0]
+      value: 
+      objectReference: {fileID: 4900000, guid: 63ed129a98319b448a88fbb06d5dd647, type: 3}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: enemy_guardian_prefab
+      value: 
+      objectReference: {fileID: 6072934772370195339, guid: cb98eaebd8e4dde43992a5215f5ee3f3,
+        type: 3}
+    - target: {fileID: 5095686350413751701, guid: 76625ec66c82a144ea7d54cce17d20e4,
+        type: 3}
+      propertyPath: enemy_mole_prefab
+      value: 
+      objectReference: {fileID: 2716445316209434194, guid: 378159ac276043041903bfe996bf9158,
+        type: 3}
     - target: {fileID: 5095686350413751702, guid: 76625ec66c82a144ea7d54cce17d20e4,
         type: 3}
       propertyPath: m_Name

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class enemy_sphinx : enemy_parent {
+public class enemy_mole : enemy_parent {
 
     public Animator mainAnimator;
-    public bool recovering;
-    [SerializeField] int respawnIn = 3;
+    public int earthStack;
 
 
     // Start is called before the first frame update
@@ -16,9 +15,9 @@ public class enemy_sphinx : enemy_parent {
         gridMaster = (Grid)GameObject.Find("GameMaster").GetComponent(typeof(Grid));
         selector = (selector)GameObject.Find("Selector").GetComponent(typeof(selector));
 
-        mainAnimator = this.transform.Find("main").gameObject.GetComponent<Animator>();
-        headAnimator = this.transform.Find("counter").gameObject.GetComponent<Animator>();
-        bodyAnimator = null;
+        mainAnimator = this.transform.Find("dirt").gameObject.GetComponent<Animator>();
+        headAnimator = this.transform.Find("arm").gameObject.GetComponent<Animator>();
+        bodyAnimator = this.transform.Find("body").gameObject.GetComponent<Animator>();
         childSprites = GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer csprite in childSprites) {
             csprite.enabled = false;
@@ -27,17 +26,15 @@ public class enemy_sphinx : enemy_parent {
         enemyDone = true;
         thisNode = gridMaster.nodeFromWorldPoint(this.transform.position);
         lastNode = thisNode;
-        recovering = false;
 
 
-
-        maxWalkDistance = 5;
+        earthStack = 0;
+        maxWalkDistance = 3;
         attackRange = 1;
-        enemyClass = globals.bossname;
-        maxHealth = globals.bosshealth;
-        health = globals.bosshealth;
-        UnitPower = globals.bossPower;
-        StartCoroutine("wakeUpAnimation");
+        enemyClass = globals.moleName;
+        maxHealth = globals.molehealth;
+        health = globals.molehealth;
+        UnitPower = globals.molePower;
     }
 
     
@@ -48,175 +45,162 @@ public class enemy_sphinx : enemy_parent {
         //this.gameObject.GetComponent<SpriteRenderer>().enabled = !thisNode.nodeOculto;
         foreach (SpriteRenderer csprite in childSprites) {
             csprite.enabled = !thisNode.nodeOculto;
-            if (recovering) {
-                csprite.color = Color.magenta;
-            } else {
-                csprite.color = Color.red;
-            }
+            csprite.color = Color.magenta;
         }
     }
 
 
     public override IEnumerator enemysturn() {
         enemyDone = false;
-        if (recovering) {
-            respawnIn--;
-            if (!thisNode.nodeOculto) {
-                selector.camScript.focusedObject = this.gameObject;
-            } else {
-                selector.camScript.focusedObject = null;
-            }
-            if (respawnIn <= 0) {
-                health = maxHealth;
-                recovering = false;
-            }
-            animateHead(respawnIn);
-            animateMain("sphinx_rest");
-            yield return new WaitForSeconds(1.5f);
-        } else {
-            //normal enemy ai
-            //take relic if at the spot
-            if (thisNode.isThereAnItemHere()) {
-                relic targetrelic = (relic)thisNode.itemInThisNode.GetComponent<relic>();
-                heldRelic = targetrelic;
-                targetrelic.onTake(false);
-                targetrelic.transform.position = transform.position;
-            }
+        animateHead(1);
+        animateBody(true);
+        //normal enemy ai
+        //take relic if at the spot
+        if (thisNode.isThereAnItemHere()) {
+            relic targetrelic = (relic)thisNode.itemInThisNode.GetComponent<relic>();
+            heldRelic = targetrelic;
+            targetrelic.onTake(false);
+            targetrelic.transform.position = transform.position;
+        }
 
-            //is this enemy active
-            unit_parent prey = null;
-            listMovementRange();
-            Debug.Log(this.gameObject.name + ">>>>>>");
-            selector.camScript.focusedObject = this.gameObject; //NEW
+        //is this enemy active
+        unit_parent prey = null;
+        listMovementRange();
+        Debug.Log(this.gameObject.name + ">>>>>>");
+        selector.camScript.focusedObject = this.gameObject; //NEW
 
-            //step 1: get target unit
-            //obtener lista de objetivos
-            List<unit_parent> allUnits = new List<unit_parent>();
-            foreach (GameObject unit in gridMaster.units) {
-                allUnits.Add((unit_parent)unit.GetComponent(typeof(unit_parent)));
-            }
-            //restablecer aggro
+        //step 1: get target unit
+        //obtener lista de objetivos
+        List<unit_parent> allUnits = new List<unit_parent>();
+        foreach (GameObject unit in gridMaster.units) {
+            allUnits.Add((unit_parent)unit.GetComponent(typeof(unit_parent)));
+        }
+        //restablecer aggro
+        foreach (unit_parent upa in allUnits) {
+            upa.aggro = 0;
+        }
+        if (allUnits.Count >= 1) {
+            //añadir aggro segun criterio
+            allUnits.OrderBy(item => item.health).FirstOrDefault().aggro++;
             foreach (unit_parent upa in allUnits) {
-                upa.aggro = 0;
-            }
-            if (allUnits.Count >= 1) {
-                //añadir aggro segun criterio
-                allUnits.OrderBy(item => item.health).FirstOrDefault().aggro++;
-                foreach (unit_parent upa in allUnits) {
-                    if (upa.heldRelic != null) {
-                        upa.aggro += 10;
-                    }
-
-                    if (upa.health < this.UnitPower) {
-                        upa.aggro += 2;
-                    }
-                    if (upa.health == upa.maxHealth) {
-                        upa.aggro += 1;
-                    }
-
-                    if (highLightAttackableNodes(upa.thisNode)) {
-                        upa.aggro += 4;
-                    }
-                }
-                //el de mas aggro es el objetivo
-                //prey = allUnits.LastOrDefault();
-                prey = allUnits.OrderByDescending(item => item.aggro).FirstOrDefault();
-            }
-
-
-            //step 2: make path to target
-            if (prey != null) {
-
-                List<Node> attackPath = null;
-                attackPath = pathToUnit(prey.thisNode, this.thisNode, 100, true);
-                Debug.Log(this.gameObject.name + " path asigned");
-
-                if (attackPath != null && attackPath.Count() > 0) {
-                    int i = 0;
-                    //step 3: move there
-                    while ((i < attackPath.Count) && (i < maxWalkDistance + 1)) {
-                        //Debug.Log(this.gameObject.name + " moving to prey[" + attackPath[i].gridPoint + "]");
-                        animateMain("sphinx_walk");
-                        this.thisNode = attackPath[i];
-                        if (!thisNode.nodeOculto) {
-                            selector.camScript.focusedObject = this.gameObject;
-                        } else {
-                            selector.camScript.focusedObject = null;
-                        }
-                        this.updatePosition();
-                        //wait a bit between movements
-                        float time = 0.2f;
-                        float ix = 0.0f;
-                        float rate = 4.0f / time;
-                        while (ix < 4.0f) {
-                            ix += Time.deltaTime * rate;
-                            yield return null;
-                        }
-                        //yield return new WaitForSeconds(1);
-                        i++;
-                    }
-                } else {
-                    if (attackPath == null) { Debug.Log(this.gameObject.name + " attackPath null"); } else { Debug.Log(this.gameObject.name + " attackPath count " + attackPath.Count); }
-
+                if (upa.heldRelic != null) {
+                    upa.aggro += 10;
                 }
 
-                //step 4: attack
-                if (
-                        (thisNode.upNode != null && thisNode.upNode.Equals(prey.thisNode)) ||
-                        (thisNode.leftNode != null && thisNode.leftNode.Equals(prey.thisNode)) ||
-                        (thisNode.rightNode != null && thisNode.rightNode.Equals(prey.thisNode)) ||
-                        (thisNode.downNode != null && thisNode.downNode.Equals(prey.thisNode))
-                    
-                ) {
+                if (upa.health < this.UnitPower) {
+                    upa.aggro += 2;
+                }
+                if (upa.health == upa.maxHealth) {
+                    upa.aggro += 1;
+                }
 
+                if (highLightAttackableNodes(upa.thisNode)) {
+                    upa.aggro += 4;
+                }
+            }
+            //el de mas aggro es el objetivo
+            //prey = allUnits.LastOrDefault();
+            prey = allUnits.OrderByDescending(item => item.aggro).FirstOrDefault();
+        }
+
+
+        //step 2: make path to target
+        if (prey != null) {
+
+            List<Node> attackPath = null;
+            attackPath = pathToUnit(prey.thisNode, this.thisNode, 100, true);
+            Debug.Log(this.gameObject.name + " path asigned");
+
+            if (attackPath != null && attackPath.Count() > 0) {
+                int i = 0;
+                //step 3: move there
+                while ((i < attackPath.Count) && (i < maxWalkDistance + 1)) {
+                    //Debug.Log(this.gameObject.name + " moving to prey[" + attackPath[i].gridPoint + "]");
+                    animateMain("sphinx_walk");
+                    this.lastNode = this.thisNode;
+                    this.thisNode = attackPath[i];
+                    if (thisNode.nodeOculto) {
+                        thisNode.revealNode(true);
+                        earthStack += 1;
+                    }
                     selector.camScript.focusedObject = this.gameObject;
+                    this.updatePosition();
+                    //wait a bit between movements
+                    float time = 0.2f;
+                    float ix = 0.0f;
+                    float rate = 4.0f / time;
+                    while (ix < 4.0f) {
+                        ix += Time.deltaTime * rate;
+                        yield return null;
+                    }
+                    //yield return new WaitForSeconds(1);
+                    if (earthStack > 0) {
+                        lastNode.burryNode();
+                        earthStack -= 1;
+                    }
+                    i++;
+                }
+            } else {
+                if (attackPath == null) { Debug.Log(this.gameObject.name + " attackPath null"); } else { Debug.Log(this.gameObject.name + " attackPath count " + attackPath.Count); }
+
+            }
+
+            //step 4: attack
+            if (
+                    (thisNode.upNode != null && thisNode.upNode.Equals(prey.thisNode)) ||
+                    (thisNode.leftNode != null && thisNode.leftNode.Equals(prey.thisNode)) ||
+                    (thisNode.rightNode != null && thisNode.rightNode.Equals(prey.thisNode)) ||
+                    (thisNode.downNode != null && thisNode.downNode.Equals(prey.thisNode))
+                    
+            ) {
+
+                selector.camScript.focusedObject = this.gameObject;
+                if (thisNode.nodeOculto) { thisNode.revealNode(); }
+                prey.health -= UnitPower;
+                prey.gameObject.GetComponent<Animator>().Play("unitHitAnimation");
+                if (prey.health <= 0) {
+                    Node preynode = prey.thisNode;
+                    prey.getRekt();
+                    preynode.burryNode();
+                }
+                //animateMain("sphinx_attack");
+                animateHead(2);
+                yield return new WaitForSeconds(0.5f);
+                selector.camScript.focusedObject = null;
+            } else {
+                // como la esfinge prioriza al que tenga una reliquia tiende a ignorar enemigos en la via, asi que se le da un target secundario
+                //prey is out of range but attack something else if there is
+                unit_parent secondprey =null;
+                foreach (Node nn in thisNode.getVecinos()) {
+                    if (nn.isThereAUnitHere()) {
+                        if (secondprey == null) {
+                            secondprey = nn.unitInThisNode;
+                        } else {
+                            if (nn.unitInThisNode.health < secondprey.health) {
+                                secondprey = nn.unitInThisNode;
+                            }
+                                
+                        }
+                    }
+                }
+                if (secondprey!=null) {
                     if (thisNode.nodeOculto) { thisNode.revealNode(); }
-                    prey.health -= UnitPower;
-                    prey.gameObject.GetComponent<Animator>().Play("unitHitAnimation");
-                    if (prey.health <= 0) {
-                        Node preynode = prey.thisNode;
-                        prey.getRekt();
+                    secondprey.health -= UnitPower;
+                    secondprey.gameObject.GetComponent<Animator>().Play("unitHitAnimation");
+                    if (secondprey.health <= 0) {
+                        Node preynode = secondprey.thisNode;
+                        secondprey.getRekt();
                         preynode.burryNode();
                     }
-                    animateMain("sphinx_attack");
                     yield return new WaitForSeconds(0.5f);
-                    selector.camScript.focusedObject = null;
-                } else {
-                    // como la esfinge prioriza al que tenga una reliquia tiende a ignorar enemigos en la via, asi que se le da un target secundario
-                    //prey is out of range but attack something else if there is
-                    unit_parent secondprey =null;
-                    foreach (Node nn in thisNode.getVecinos()) {
-                        if (nn.isThereAUnitHere()) {
-                            if (secondprey == null) {
-                                secondprey = nn.unitInThisNode;
-                            } else {
-                                if (nn.unitInThisNode.health < secondprey.health) {
-                                    secondprey = nn.unitInThisNode;
-                                }
-                                
-                            }
-                        }
-                    }
-                    if (secondprey!=null) {
-                        if (thisNode.nodeOculto) { thisNode.revealNode(); }
-                        secondprey.health -= UnitPower;
-                        secondprey.gameObject.GetComponent<Animator>().Play("unitHitAnimation");
-                        if (secondprey.health <= 0) {
-                            Node preynode = secondprey.thisNode;
-                            secondprey.getRekt();
-                            preynode.burryNode();
-                        }
-                        yield return new WaitForSeconds(0.5f);
-                    }
                 }
-                animateMain("sphinx_ok");
-
             }
-                
-            yield return null;
+            //animateMain("sphinx_ok");
+            animateHead(0);
+            animateBody(false);
 
-            enemyDone = true;
         }
+        
         yield return null;
         enemyDone = true;
         selector.camScript.focusedObject = null;
@@ -290,20 +274,22 @@ public class enemy_sphinx : enemy_parent {
     }
 
     
-    public override void animateHead(int state) {
-        if (headAnimator != null) {
-            switch (state) {
-                case 2: headAnimator.Play("count3to2"); break;
-                case 1: headAnimator.Play("count2to1"); break;
-                case 0: StartCoroutine("wakeUpAnimation"); break;
-            }
-            
+    public override void animateHead(int state)
+    {
+        if (headAnimator != null)
+        {
+            headAnimator.SetInteger("bite", state);
         }
     }
 
     public override void animateBody(bool state) {
-        if (bodyAnimator != null) {
+        if (bodyAnimator != null)
+        {
             bodyAnimator.SetBool("moving", state);
+        }
+        if (mainAnimator != null)
+        {
+            mainAnimator.SetBool("moving", state);
         }
     }
 
@@ -311,21 +297,6 @@ public class enemy_sphinx : enemy_parent {
         if (mainAnimator != null) {
             mainAnimator.Play(animation);
         }
-    }
-
-    public IEnumerator wakeUpAnimation() {
-        selector.camScript.focusedObject = this.gameObject;
-        selector.actionLocked = true;
-
-        mainAnimator.Play("sphinx_wakeup");
-        yield return new WaitForSeconds(1.5f);
-
-        selector.camScript.focusedObject = null;
-        selector.actionLocked = false;
-    }
-
-    public override bool okToAttack() {
-        return !recovering;
     }
 
 
@@ -511,21 +482,22 @@ public class enemy_sphinx : enemy_parent {
 
     }
 
-    public override void getRekt() {
-        Debug.Log("boss controlled");
-        if (heldRelic != null) {
+    public override void getRekt()
+    {
+        Debug.Log("enemy destroyed");
+        GameObject explotion_inst = Instantiate((GameObject)Resources.Load("enemy_explotion"), this.transform.position, Quaternion.identity, gridMaster.groupEnemy);
+        Destroy(explotion_inst, 1.0f);
+
+        if (heldRelic != null)
+        {
             heldRelic.transform.position = this.transform.position;
             heldRelic.onReveal();
             heldRelic = null;
             Debug.Log("relic dropped");
+
         }
-        if (!recovering) {
-            gridMaster.addDinero(globals.nestCoinLoot);
-            respawnIn = 3;
-        }
-        animateMain("sphinx_rest");
-        recovering = true;
-        health = 0;
+        gridMaster.addDinero(globals.guardianCoinLoot);
+        Destroy(this.gameObject);
     }
 
     public override void OnDestroy() {

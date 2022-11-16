@@ -60,8 +60,8 @@
 3;1;normal;true
 3;0;normal;true
 2;9;normal;true
-2;8;normal;true
-2;7;normalMole;false
+2;8;normal;false
+2;7;normal;false
 2;6;normal;false
 2;5;normal;false
 2;4;normal;true
@@ -80,10 +80,10 @@
 1;1;normal;false
 1;0;normal;false
 0;9;normal;true
-0;8;normal;true
-0;7;normal;false
-0;6;normal;false
-0;5;normal;false
+0;8;normalsphinxstatue;false
+0;7;normalGuardian2;false
+0;6;normalGuardian1;false
+0;5;normalMole;false
 0;4;normal;true
 0;3;normal;true
 0;2;normal;false

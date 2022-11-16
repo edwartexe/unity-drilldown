@@ -61,12 +61,14 @@ public static class globals {
 
     //-----------------enemies
     public const string wormname = "Elder Thing";
-    public const string sharkname = "Sand Shark";
+    public const string sharkname = "Sand Shark"; //abtu
     public const string thiefname = "Gremlin";
     public const string thief2name = "Super Gremlin";
     public const string bossname = "Sphinx";
     public const string nestName = "Gremlin Nest";
     public const string unlockerName = "Lock";
+    public const string guardianName = "Guardian";
+    public const string moleName = "Mole";
 
     public const int wormhealth = 20;
     public const int sharkhealth = 50;
@@ -75,6 +77,8 @@ public static class globals {
     public const int bosshealth = 100;
     public const int nesthealth = 40;
     public const int unlockerhealth = 10;
+    public const int guardianhealth = 60;
+    public const int molehealth = 45;
 
     public const int wormPower = 10;
     public const int sharkPower = 20;
@@ -83,6 +87,8 @@ public static class globals {
     public const int bossPower = 30;
     public const int nestPower = 0;
     public const int unlockerpower = 0;
+    public const int guardianPower = 25;
+    public const int molePower = 15;
 
     public const int wormGasloot = 20;
     public const int sharkGasloot = 30;
@@ -98,6 +104,8 @@ public static class globals {
     public const int bossCoinloot = 60;//20
     public const int nestCoinLoot = 5;//1
     public const int unlockerCoinLoot = 5;
+    public const int guardianCoinLoot = 27;
+    public const int moleCoinLoot = 20;
 
     //functions
     public static int Mod(int x, int m) {

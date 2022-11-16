@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class enemy_sphinx : enemy_parent {
+public class enemy_guardian : enemy_parent {
 
     public Animator mainAnimator;
-    public bool recovering;
-    [SerializeField] int respawnIn = 3;
 
 
     // Start is called before the first frame update
@@ -27,16 +25,15 @@ public class enemy_sphinx : enemy_parent {
         enemyDone = true;
         thisNode = gridMaster.nodeFromWorldPoint(this.transform.position);
         lastNode = thisNode;
-        recovering = false;
 
 
 
-        maxWalkDistance = 5;
+        maxWalkDistance = 3;
         attackRange = 1;
-        enemyClass = globals.bossname;
-        maxHealth = globals.bosshealth;
-        health = globals.bosshealth;
-        UnitPower = globals.bossPower;
+        enemyClass = globals.guardianName;
+        maxHealth = globals.guardianhealth;
+        health = globals.guardianhealth;
+        UnitPower = globals.guardianPower;
         StartCoroutine("wakeUpAnimation");
     }
 
@@ -48,32 +45,13 @@ public class enemy_sphinx : enemy_parent {
         //this.gameObject.GetComponent<SpriteRenderer>().enabled = !thisNode.nodeOculto;
         foreach (SpriteRenderer csprite in childSprites) {
             csprite.enabled = !thisNode.nodeOculto;
-            if (recovering) {
-                csprite.color = Color.magenta;
-            } else {
-                csprite.color = Color.red;
-            }
+            csprite.color = Color.magenta;
         }
     }
 
 
     public override IEnumerator enemysturn() {
         enemyDone = false;
-        if (recovering) {
-            respawnIn--;
-            if (!thisNode.nodeOculto) {
-                selector.camScript.focusedObject = this.gameObject;
-            } else {
-                selector.camScript.focusedObject = null;
-            }
-            if (respawnIn <= 0) {
-                health = maxHealth;
-                recovering = false;
-            }
-            animateHead(respawnIn);
-            animateMain("sphinx_rest");
-            yield return new WaitForSeconds(1.5f);
-        } else {
             //normal enemy ai
             //take relic if at the spot
             if (thisNode.isThereAnItemHere()) {
@@ -212,11 +190,7 @@ public class enemy_sphinx : enemy_parent {
                 animateMain("sphinx_ok");
 
             }
-                
-            yield return null;
-
-            enemyDone = true;
-        }
+        
         yield return null;
         enemyDone = true;
         selector.camScript.focusedObject = null;
@@ -322,10 +296,6 @@ public class enemy_sphinx : enemy_parent {
 
         selector.camScript.focusedObject = null;
         selector.actionLocked = false;
-    }
-
-    public override bool okToAttack() {
-        return !recovering;
     }
 
 
@@ -511,21 +481,22 @@ public class enemy_sphinx : enemy_parent {
 
     }
 
-    public override void getRekt() {
-        Debug.Log("boss controlled");
-        if (heldRelic != null) {
+    public override void getRekt()
+    {
+        Debug.Log("enemy destroyed");
+        GameObject explotion_inst = Instantiate((GameObject)Resources.Load("enemy_explotion"), this.transform.position, Quaternion.identity, gridMaster.groupEnemy);
+        Destroy(explotion_inst, 1.0f);
+
+        if (heldRelic != null)
+        {
             heldRelic.transform.position = this.transform.position;
             heldRelic.onReveal();
             heldRelic = null;
             Debug.Log("relic dropped");
+
         }
-        if (!recovering) {
-            gridMaster.addDinero(globals.nestCoinLoot);
-            respawnIn = 3;
-        }
-        animateMain("sphinx_rest");
-        recovering = true;
-        health = 0;
+        gridMaster.addDinero(globals.guardianCoinLoot);
+        Destroy(this.gameObject);
     }
 
     public override void OnDestroy() {
